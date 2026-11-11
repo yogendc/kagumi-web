@@ -192,7 +192,7 @@
     },
     layananRingkas: function (w) {
       return w.layanan.map(function (l) {
-        return '<a class="svc" href="layanan.html#' + esc(l.kunci) + '"><span class="svc-ico"><svg><use href="#' + ICON_LAY[l.kunci] + '"/></svg></span><h3>' + esc(l.judul) +
+        return '<a class="svc" href="layanan.html#' + esc(l.kunci) + '"><div class="svc-photo" data-foto-img="' + esc(l.kunci) + '" hidden></div><span class="svc-ico"><svg><use href="#' + ICON_LAY[l.kunci] + '"/></svg></span><h3>' + esc(l.judul) +
           '</h3><p>' + esc(l.teks) + '</p><span class="link-arrow">Selengkapnya<svg><use href="#i-arrow"/></svg></span></a>';
       }).join('');
     },
@@ -201,7 +201,7 @@
       return w.layanan.map(function (l, i) {
         var wa = linkWA('layanan', l.judul);
         return '<section class="sec' + (i % 2 ? ' sec-alt' : '') + '" id="' + esc(l.kunci) + '"><div class="wrap svc-detail">' +
-          '<div class="svc-art"><svg><use href="#' + ICON_LAY[l.kunci] + '"/></svg><span>0' + (i + 1) + '</span></div>' +
+          '<div class="svc-art" data-foto-img="' + esc(l.kunci) + '"><svg><use href="#' + ICON_LAY[l.kunci] + '"/></svg><span>0' + (i + 1) + '</span></div>' +
           '<div><h2>' + esc(l.judul) + '</h2><div class="prose">' + paragraf(l.teks) + '</div>' +
           (l.poin.length ? '<ul class="biz-list">' + l.poin.map(function (p) { return '<li><svg><use href="#i-check"/></svg><span>' + esc(p) + '</span></li>'; }).join('') + '</ul>' : '') +
           '<div class="hero-cta">' + (wa ? '<a class="btn btn-wa" target="_blank" rel="noopener" href="' + esc(wa) + '"><svg><use href="#i-wa"/></svg><span>Tanya via WhatsApp</span></a>' : '') +
@@ -280,6 +280,48 @@
       if (!f || f.getAttribute('src') !== src) el.innerHTML = '<iframe title="Peta lokasi kantor" loading="lazy" referrerpolicy="no-referrer-when-downgrade" src="' + esc(src) + '"></iframe>';
     });
     $$('[data-maps-link]').forEach(function (a) { a.hidden = !q; a.href = 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(q); });
+    terapkanFoto();
+  }
+
+  // ── Foto (latar halaman & foto layanan) ──
+  // Utamakan tautan gambar Google Drive (cepat). Bila gagal dibuka, ambil lewat server (getWebFoto) lalu simpan di browser.
+  var FOTO_SIAP = {};
+  function ambilFoto(slot, f, cb) {
+    var key = slot + ':' + f.v;
+    if (FOTO_SIAP[key] !== undefined) { if (FOTO_SIAP[key]) cb(FOTO_SIAP[key]); return; }
+    var simpan = store.get('kgmFoto_' + slot);
+    if (simpan && simpan.v === f.v && simpan.d) { FOTO_SIAP[key] = simpan.d; cb(simpan.d); return; }
+    FOTO_SIAP[key] = '';
+    var lewatServer = function () {
+      api('getWebFoto', [slot], 30000).then(function (r) {
+        if (!r.success) return;
+        FOTO_SIAP[key] = r.data; store.set('kgmFoto_' + slot, { v: f.v, d: r.data }); cb(r.data);
+      }).catch(function () { /* tanpa foto: latar warna tetap tampil */ });
+    };
+    if (!f.url) { lewatServer(); return; }
+    var img = new Image();
+    img.onload = function () { FOTO_SIAP[key] = f.url; cb(f.url); };
+    img.onerror = lewatServer;
+    img.src = f.url;
+  }
+  function terapkanFoto() {
+    var foto = W().foto || {};
+    $$('[data-foto]').forEach(function (el) {
+      var f = foto[el.getAttribute('data-foto')];
+      if (!f) { el.classList.remove('has-photo'); return; }
+      ambilFoto(el.getAttribute('data-foto'), f, function (src) {
+        el.style.setProperty('--foto', 'url("' + src.replace(/"/g, '%22') + '")');
+        el.classList.add('has-photo');
+      });
+    });
+    $$('[data-foto-img]').forEach(function (el) {
+      var slot = el.getAttribute('data-foto-img'), f = foto[slot];
+      if (!f) return;
+      ambilFoto(slot, f, function (src) {
+        el.insertAdjacentHTML('afterbegin', '<img alt="" loading="lazy" src="' + esc(src) + '">');
+        el.classList.add('has-img'); el.hidden = false;
+      });
+    });
   }
 
   // ── Menu & navigasi ──
