@@ -294,3 +294,10 @@ a:hover > .link-arrow svg, .link-arrow:hover svg, .news:hover .link-arrow svg { 
   .has-photo { background: linear-gradient(180deg, rgba(5, 26, 18, .86) 0%, rgba(5, 26, 18, .72) 100%), var(--foto) center / cover no-repeat; }
   .svc-art.has-img { width: 100%; aspect-ratio: 16 / 9; border-radius: 16px; }
 }
+
+/* Logo khusus website (boleh mendatar) */
+.brand-mark.is-wide { width: auto; max-width: 220px; height: 44px; border: 0; border-radius: 0; background: transparent; }
+.brand-mark.is-wide img { width: auto; height: 100%; max-width: 220px; object-fit: contain; background: transparent; }
+.brand.no-name .brand-name { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+.foot .brand-mark.is-wide { background: #fff; padding: 6px 10px; border-radius: 10px; height: 52px; box-sizing: border-box; }
+@media (max-width: 560px) { .brand-mark.is-wide { max-width: 160px; height: 38px; } .brand-mark.is-wide img { max-width: 160px; } }

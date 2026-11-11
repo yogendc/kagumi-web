@@ -264,9 +264,16 @@
       r.setProperty('--primary-soft', 'color-mix(in srgb, ' + P.themeColor + ' 10%, #fff)');
       var m = $('meta[name="theme-color"]'); if (m) m.content = P.themeColor;
     }
-    if (P.logo && /^data:image\/|^https:\/\//.test(P.logo)) {
-      $$('[data-logo]').forEach(function (el) { el.innerHTML = '<img alt="" src="' + esc(P.logo) + '">'; el.classList.add('has-img'); });
-    }
+    // Logo: logo khusus website (Kelola Website) → bila kosong, logo aplikasi (Pengaturan → Branding)
+    var lw = w.logo || {}, logo = /^data:image\//.test(lw.data || '') ? lw.data : (/^data:image\/|^https:\/\//.test(P.logo || '') ? P.logo : '');
+    $$('[data-logo]').forEach(function (el) {
+      if (!logo) return;
+      el.innerHTML = '<img alt="' + esc(n) + '" src="' + esc(logo) + '">';
+      el.classList.add('has-img');
+      el.classList.toggle('is-wide', !!lw.data);
+    });
+    $$('.brand').forEach(function (b) { b.classList.toggle('no-name', !!(logo && lw.data && lw.nama === false)); });
+    if (logo) { var ic = $('link[rel="icon"]'); if (ic) ic.href = logo; }
     $$('[data-w]').forEach(function (el) {
       var f = R[el.getAttribute('data-w')];
       if (f) el.innerHTML = f(w, el);
