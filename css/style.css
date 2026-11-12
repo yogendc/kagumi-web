@@ -301,3 +301,14 @@ a:hover > .link-arrow svg, .link-arrow:hover svg, .news:hover .link-arrow svg { 
 .brand.no-name .brand-name { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
 .foot .brand-mark.is-wide { background: #fff; padding: 6px 10px; border-radius: 10px; height: 52px; box-sizing: border-box; }
 @media (max-width: 560px) { .brand-mark.is-wide { max-width: 160px; height: 38px; } .brand-mark.is-wide img { max-width: 160px; } }
+
+/* Layanan keluhan */
+.klh-wrap { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, .85fr); gap: 32px; align-items: start; }
+.klh-no { font: 800 26px var(--display); color: var(--primary); letter-spacing: .02em; margin: 0; }
+.klh-sol { margin-top: 14px; padding: 12px 14px; border-radius: 12px; background: var(--primary-soft); }
+.klh-sol p { margin-top: 4px; }
+.step-isi { margin-top: 4px; font-size: 14px; color: #33443d; }
+@media (max-width: 960px) { .klh-wrap { grid-template-columns: minmax(0, 1fr); } .nav a { padding: 10px 12px; } }
+@media (min-width: 961px) and (max-width: 1140px) { .nav a { padding: 8px 9px; font-size: 14px; } }
+.sec .track-head h2 { font-size: 20px; }
+.sec .form-card h2 { font-size: 24px; }

@@ -475,6 +475,64 @@
     });
   }
 
+  // ── Keluhan: ajukan & cek status ──
+  var kf = $('#kForm');
+  if (kf) {
+    var KLH_ST = { 'Diterima': '', 'Sedang ditangani': '', 'Menunggu konfirmasi Anda': '', 'Selesai': 'is-done', 'Dibatalkan': 'is-cancel' };
+    var resiQ = (location.search.match(/[?&]resi=([^&]+)/) || [])[1];
+    if (resiQ) try { $('#kResi').value = decodeURIComponent(resiQ).toUpperCase(); } catch (e) { /* abaikan */ }
+    kf.querySelector('[name=HP4]').addEventListener('input', function () { this.value = this.value.replace(/\D/g, '').slice(0, 4); });
+    kf.addEventListener('submit', function (ev) {
+      ev.preventDefault();
+      var d = {};
+      $$('input,select,textarea', kf).forEach(function (el) { if (el.name) d[el.name] = el.value.trim(); });
+      d.NoResi = d.NoResi.toUpperCase().replace(/\s+/g, ''); kf.querySelector('[name=NoResi]').value = d.NoResi;
+      var salah = !d.NoResi ? 'Isi nomor resi atau surat jalan.' : d.HP4.length !== 4 ? 'Isi 4 digit terakhir no. HP yang tercantum di dokumen.'
+        : !d.NamaPelapor ? 'Isi nama Anda.' : d.HPPelapor.replace(/\D/g, '').length < 9 ? 'Isi no. HP / WhatsApp yang aktif.'
+        : d.EmailPelapor && !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(d.EmailPelapor) ? 'Format email tidak valid.'
+        : !d.Kategori ? 'Pilih jenis keluhan.' : d.Deskripsi.length < 10 ? 'Ceritakan keluhan minimal 10 karakter.' : '';
+      if (salah) { pesan('#kMsg', salah); return; }
+      pesan('#kMsg', '');
+      var btn = $('#kBtn'); btn.disabled = true; btn.querySelector('span').textContent = 'Mengirim…';
+      api('kirimKeluhan', [d]).then(function (res) {
+        if (!res.success) throw new Error(/Aksi tidak dikenal/.test(res.message) ? 'Formulir keluhan sedang tidak tersedia. Silakan hubungi kami lewat WhatsApp.' : res.message);
+        var no = res.data.noKeluhan;
+        kf.hidden = true; $('#kDone').hidden = false; $('#kNo').textContent = no;
+        $('#sNo').value = no; $('#sHp').value = d.HPPelapor.replace(/\D/g, '').slice(-4);
+        var n = nomorWA(), w = $('#kWa');
+        w.hidden = !n;
+        if (n) w.href = 'https://wa.me/' + n + '?text=' + encodeURIComponent('Halo ' + nama() + ', saya ' + d.NamaPelapor + ' sudah mengajukan keluhan no. ' + no + ' untuk resi ' + d.NoResi + ' (' + d.Kategori + ').');
+        $('#kDone').scrollIntoView({ block: 'center', behavior: 'smooth' });
+      }).catch(function (e) { pesan('#kMsg', e.message); })
+        .then(function () { btn.disabled = false; btn.querySelector('span').textContent = 'Kirim keluhan'; });
+    });
+    $('#sHp').addEventListener('input', function () { this.value = this.value.replace(/\D/g, '').slice(0, 4); });
+    $('#sForm').addEventListener('submit', function (ev) {
+      ev.preventDefault();
+      var no = $('#sNo').value.trim().toUpperCase().replace(/\s+/g, ''), hp = $('#sHp').value.replace(/\D/g, '');
+      $('#sNo').value = no;
+      if (!no || hp.length !== 4) { pesan('#sMsg', 'Isi nomor keluhan dan 4 digit terakhir no. HP pelapor.'); return; }
+      pesan('#sMsg', ''); $('#sResult').hidden = true;
+      var btn = $('#sBtn'); btn.disabled = true; btn.querySelector('span').textContent = 'Mencari…';
+      api('cekKeluhan', [no, hp]).then(function (res) {
+        if (!res.success) throw new Error(/Aksi tidak dikenal/.test(res.message) ? 'Layanan cek keluhan sedang tidak tersedia.' : res.message);
+        var d = res.data;
+        var html = '<div class="t-top"><div class="t-no"><small>No. keluhan · ' + esc(d.kategori) + '</small>' + esc(d.noKeluhan) + '</div><span class="badge ' + (KLH_ST[d.status] || '') + '">' + esc(d.status) + '</span></div>' +
+          (d.noResi ? '<p class="t-upd">Resi / surat jalan ' + esc(d.noResi) + ' · diajukan ' + fmtWaktu(d.dibuat) + '</p>' : '') +
+          (d.solusi ? '<div class="klh-sol"><b>Penyelesaian</b><p>' + esc(d.solusi) + '</p></div>' : '') +
+          '<ol class="steps">' + d.riwayat.slice().reverse().map(function (r, i) {
+            return '<li class="step done' + (i === 0 ? ' now' : '') + '"><span class="dot"><svg><use href="#i-check"/></svg></span><div><b>' + esc(r.jenis) + '</b><time>' + fmtWaktu(r.waktu) + '</time>' +
+              (r.isi ? '<p class="step-isi">' + esc(r.isi).replace(/\n/g, '<br>') + '</p>' : '') + '</div></li>';
+          }).join('') + '</ol>';
+        $('#sResult').innerHTML = html; $('#sResult').hidden = false;
+        try { history.replaceState(null, '', '?klh=' + encodeURIComponent(no) + '#status'); } catch (e) { /* abaikan */ }
+      }).catch(function (e) { pesan('#sMsg', e.message); })
+        .then(function () { btn.disabled = false; btn.querySelector('span').textContent = 'Cek status'; });
+    });
+    var klhQ = (location.search.match(/[?&]klh=([^&]+)/) || [])[1];
+    if (klhQ) { try { $('#sNo').value = decodeURIComponent(klhQ).toUpperCase(); } catch (e) { /* abaikan */ } setTimeout(function () { $('#status').scrollIntoView(); $('#sHp').focus({ preventScroll: true }); }, 50); }
+  }
+
   // ── Mulai: tampilkan isi tersimpan/bawaan, lalu segarkan dari server ──
   terapkan();
   function keHash() { if (location.hash && PAGE !== 'lacak') { var t = document.getElementById(location.hash.slice(1)); if (t) t.scrollIntoView(); } }

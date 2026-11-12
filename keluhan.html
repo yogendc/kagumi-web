@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Layanan Keluhan — KAGUMI Transport</title>
+  <meta name="description" content="Ajukan keluhan atas kiriman Anda dan pantau status penanganannya dengan nomor keluhan.">
+  <meta name="theme-color" content="#006C49">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 64 64%22%3E%3Crect width=%2264%22 height=%2264%22 rx=%2216%22 fill=%22%23006C49%22/%3E%3Cpath d=%22M14 22h22v18H14zM36 28h8l6 6v6H36z%22 fill=%22white%22/%3E%3Ccircle cx=%2222%22 cy=%2243%22 r=%225%22 fill=%22white%22/%3E%3Ccircle cx=%2244%22 cy=%2243%22 r=%225%22 fill=%22white%22/%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css?v=2.0.0">
+</head>
+<body data-page="keluhan">
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-truck" viewBox="0 0 24 24"><path d="M3 6h11v9H3zM14 9h4l3 3v3h-7z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><circle cx="7" cy="17" r="2" fill="#fff" stroke="currentColor" stroke-width="1.8"/><circle cx="17" cy="17" r="2" fill="#fff" stroke="currentColor" stroke-width="1.8"/></symbol>
+  <symbol id="i-car" viewBox="0 0 24 24"><path d="M4 15v-3l2-5h12l2 5v3M3 15h18v3H3z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M7 12h10" stroke="currentColor" stroke-width="1.8"/><circle cx="7.5" cy="18" r="1.6" fill="currentColor"/><circle cx="16.5" cy="18" r="1.6" fill="currentColor"/></symbol>
+  <symbol id="i-box" viewBox="0 0 24 24"><path d="M3 7.5 12 3l9 4.5v9L12 21l-9-4.5z M3 7.5 12 12l9-4.5 M12 12v9" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></symbol>
+  <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.5" fill="none" stroke="currentColor" stroke-width="2"/><path d="m16 16 4.5 4.5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+  <symbol id="i-wa" viewBox="0 0 24 24"><path fill="currentColor" d="M12 2.2a9.7 9.7 0 0 0-8.3 14.8L2.4 21.6l4.7-1.2A9.7 9.7 0 1 0 12 2.2zm0 17.7c-1.5 0-3-.4-4.2-1.1l-.3-.2-2.8.7.8-2.7-.2-.3A8 8 0 1 1 12 19.9zm4.4-6c-.2-.1-1.4-.7-1.7-.8-.2-.1-.4-.1-.5.1l-.8 1c-.1.2-.3.2-.5.1a6.6 6.6 0 0 1-3.3-2.9c-.2-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.5-.4h-.5c-.2 0-.4.1-.6.3-.2.2-.8.8-.8 2s.8 2.3 1 2.5c.1.2 1.6 2.5 3.9 3.5 1.5.6 2 .7 2.8.6.4-.1 1.4-.6 1.6-1.1.2-.5.2-1 .1-1.1l-.1-.3z"/></symbol>
+  <symbol id="i-pin" viewBox="0 0 24 24"><path d="M12 21s-6.5-6-6.5-11a6.5 6.5 0 0 1 13 0c0 5-6.5 11-6.5 11z" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="12" cy="10" r="2.3" fill="none" stroke="currentColor" stroke-width="1.8"/></symbol>
+  <symbol id="i-phone" viewBox="0 0 24 24"><path d="M6.6 3.5 9 3l1.6 4-2 1.3a10 10 0 0 0 5 5L15 11.4l4 1.6-.5 2.4A2 2 0 0 1 16.6 17 13.6 13.6 0 0 1 5 5.4a2 2 0 0 1 1.6-1.9z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></symbol>
+  <symbol id="i-mail" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="m4 7 8 6 8-6" fill="none" stroke="currentColor" stroke-width="1.8"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="m5 12.5 4.5 4.5L19 7.5" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="i-x" viewBox="0 0 24 24"><path d="M7 7l10 10M17 7 7 17" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></symbol>
+  <symbol id="i-doc" viewBox="0 0 24 24"><path d="M6 3h8l4 4v14H6z M14 3v4h4 M9 12h6 M9 16h6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></symbol>
+  <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 3 5 6v5c0 4.5 3 8.3 7 10 4-1.7 7-5.5 7-10V6z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="m9 12 2 2 4-4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M12 7.5V12l3 2" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></symbol>
+  <symbol id="i-target" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="12" cy="12" r="4.5" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="12" cy="12" r="1.3" fill="currentColor"/></symbol>
+  <symbol id="i-flag" viewBox="0 0 24 24"><path d="M5 21V4M5 4h11l-2 4 2 4H5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/></symbol>
+  <symbol id="i-star" viewBox="0 0 24 24"><path d="m12 3.5 2.6 5.3 5.9.9-4.3 4.1 1 5.8L12 16.9l-5.2 2.7 1-5.8-4.3-4.1 5.9-.9z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></symbol>
+  <symbol id="i-news" viewBox="0 0 24 24"><path d="M4 5h13v14H6a2 2 0 0 1-2-2zM17 9h3v8a2 2 0 0 1-2 2M7 9h7M7 12.5h7M7 16h4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></symbol>
+  <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14m-5-5 5 5-5 5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="i-send" viewBox="0 0 24 24"><path d="M21 3 10 14M21 3l-7 18-4-7-7-4z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></symbol>
+</svg>
+<a class="skip" href="#isi">Langsung ke isi</a>
+<header class="top">
+  <div class="wrap top-in">
+    <a class="brand" href="index.html" aria-label="Beranda">
+      <span class="brand-mark" data-logo><svg><use href="#i-truck"/></svg></span>
+      <span class="brand-name" data-p="companyName">KAGUMI Transport</span>
+    </a>
+    <nav class="nav" id="nav" aria-label="Menu utama">
+      <a href="index.html" data-nav="beranda">Beranda</a>
+      <a href="tentang.html" data-nav="tentang">Tentang Kami</a>
+      <a href="layanan.html" data-nav="layanan">Produk &amp; Layanan</a>
+      <a href="kontak.html" data-nav="kontak">Hubungi Kami</a>
+      <a href="keluhan.html" data-nav="keluhan">Keluhan</a>
+      <a href="lacak.html" data-nav="lacak" class="nav-cta"><svg><use href="#i-search"/></svg>Cek Resi</a>
+    </nav>
+    <button class="menu-btn" id="menuBtn" aria-controls="nav" aria-expanded="false" aria-label="Buka menu"><span></span><span></span><span></span></button>
+  </div>
+</header>
+
+<main id="isi">
+<section class="page-hero" data-foto="kontak">
+  <div class="wrap">
+    <p class="eyebrow">Layanan keluhan</p>
+    <h1>Ada kendala dengan kiriman Anda?</h1>
+    <p class="lead">Sampaikan keluhan dengan nomor resi atau surat jalan. Anda langsung mendapat nomor keluhan untuk memantau penanganannya.</p>
+    <nav class="subnav" aria-label="Bagian halaman"><a href="#ajukan">Ajukan keluhan</a><a href="#status">Cek status keluhan</a></nav>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="wrap klh-wrap">
+    <div class="form-card" id="ajukan">
+      <h2>Ajukan keluhan</h2>
+      <p class="muted">Isi nomor dokumen dan 4 digit terakhir no. HP yang tercantum di dokumen (pengirim, penerima, atau PIC).</p>
+      <form id="kForm" novalidate>
+        <div class="hp-trap" aria-hidden="true"><label>Situs web <input name="situs" tabindex="-1" autocomplete="off"></label></div>
+        <div class="fld-2">
+          <label class="fld"><span>No. resi / surat jalan <i>*</i></span><input name="NoResi" id="kResi" autocapitalize="characters" spellcheck="false" maxlength="30" placeholder="PKT-261111-1 atau 261111-1"></label>
+          <label class="fld"><span>4 digit terakhir no. HP di dokumen <i>*</i></span><input name="HP4" inputmode="numeric" maxlength="4" placeholder="mis. 3321"></label>
+        </div>
+        <div class="fld-2">
+          <label class="fld"><span>Nama Anda <i>*</i></span><input name="NamaPelapor" maxlength="80" autocomplete="name"></label>
+          <label class="fld"><span>No. HP / WhatsApp Anda <i>*</i></span><input name="HPPelapor" inputmode="tel" maxlength="25" autocomplete="tel" placeholder="08…"></label>
+        </div>
+        <label class="fld"><span>Email</span><input name="EmailPelapor" type="email" maxlength="120" autocomplete="email" placeholder="Opsional"></label>
+        <label class="fld"><span>Jenis keluhan <i>*</i></span><select name="Kategori">
+          <option value="">Pilih jenis keluhan…</option><option>Keterlambatan</option><option>Barang rusak</option><option>Barang hilang / kurang</option>
+          <option>Kendaraan lecet / rusak</option><option>Pelayanan sopir / petugas</option><option>Tagihan / pembayaran</option>
+          <option>Dokumen (surat jalan, resi, invoice)</option><option>Lainnya</option></select></label>
+        <label class="fld"><span>Ceritakan keluhan Anda <i>*</i></span><textarea name="Deskripsi" rows="5" maxlength="3000" placeholder="Apa yang terjadi, kapan, dan apa yang Anda harapkan dari kami."></textarea></label>
+        <button class="btn btn-primary btn-block" id="kBtn" type="submit"><svg><use href="#i-send"/></svg><span>Kirim keluhan</span></button>
+        <p class="t-msg" id="kMsg" role="alert" hidden></p>
+      </form>
+      <div class="q-done" id="kDone" hidden>
+        <span class="done-ico"><svg><use href="#i-check"/></svg></span>
+        <h3>Keluhan Anda sudah kami terima.</h3>
+        <p class="muted">Simpan nomor keluhan berikut untuk memantau penanganannya:</p>
+        <p class="klh-no" id="kNo"></p>
+        <a class="btn btn-wa" id="kWa" hidden target="_blank" rel="noopener"><svg><use href="#i-wa"/></svg><span>Konfirmasi via WhatsApp</span></a>
+        <a class="btn btn-ghost" href="#status" id="kKeStatus">Cek status keluhan</a>
+      </div>
+    </div>
+
+    <div class="track-card" id="status">
+      <div class="track-head">
+        <span class="track-ico"><svg><use href="#i-search"/></svg></span>
+        <div><h2>Cek status keluhan</h2><p>Pakai nomor keluhan (diawali KLH-).</p></div>
+      </div>
+      <form id="sForm" novalidate>
+        <label class="fld"><span>No. keluhan</span><input id="sNo" autocapitalize="characters" spellcheck="false" maxlength="30" placeholder="KLH-261112-1"></label>
+        <label class="fld"><span>4 digit terakhir no. HP pelapor</span><input id="sHp" inputmode="numeric" maxlength="4" placeholder="mis. 2222"><small>No. HP yang Anda isi saat mengajukan keluhan.</small></label>
+        <button class="btn btn-primary btn-block" id="sBtn" type="submit"><svg><use href="#i-search"/></svg><span>Cek status</span></button>
+        <p class="t-msg" id="sMsg" role="alert" hidden></p>
+      </form>
+      <div class="t-result" id="sResult" hidden aria-live="polite"></div>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer class="foot">
+  <div class="wrap foot-grid">
+    <div class="foot-brand">
+      <a class="brand" href="index.html"><span class="brand-mark" data-logo><svg><use href="#i-truck"/></svg></span><span class="brand-name" data-p="companyName">KAGUMI Transport</span></a>
+      <p data-w="bidangUsahaInline"></p>
+    </div>
+    <div>
+      <h4>Menu</h4>
+      <ul><li><a href="index.html">Beranda</a></li><li><a href="tentang.html">Tentang Kami</a></li><li><a href="layanan.html">Produk &amp; Layanan</a></li><li><a href="kontak.html">Hubungi Kami</a></li><li><a href="keluhan.html">Layanan Keluhan</a></li><li><a href="lacak.html">Cek Resi</a></li></ul>
+    </div>
+    <div>
+      <h4>Kontak</h4>
+      <ul class="foot-contact">
+        <li data-row="companyAddress"><span data-p="companyAddress"></span></li>
+        <li data-row="companyPhone"><a data-p="companyPhone" data-tel></a></li>
+        <li data-row="wa"><a data-wa data-wa-text="footer">WhatsApp <span data-p="waTampil"></span></a></li>
+        <li data-row="companyEmail"><a data-p="companyEmail" data-mail></a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="wrap foot-bottom"><span>© <span data-year></span> <span data-p="companyName">KAGUMI Transport</span>. Hak cipta dilindungi.</span></div>
+</footer>
+<a class="wa-float" data-wa data-wa-text="umum" hidden aria-label="Chat WhatsApp"><svg><use href="#i-wa"/></svg></a>
+
+<script src="js/config.js?v=2.0.0"></script>
+<script src="js/web.js?v=2.0.0"></script>
+</body>
+</html>
