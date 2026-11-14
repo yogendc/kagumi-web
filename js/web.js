@@ -240,7 +240,9 @@
     var w = W();
     var n = nama();
     $$('[data-p="companyName"]').forEach(function (el) { el.textContent = n; });
-    var judul = document.title.replace(/KAGUMI Transport/g, n);
+    // Judul tab memakai nama merek (Nama aplikasi di Pengaturan), bukan nama badan usaha
+    var merek = P.appName || n;
+    var judul = document.title.replace(/KAGUMI Cargo & Auto Logistics|KAGUMI Transport/g, merek);
     if (judul !== document.title) document.title = judul;
     var wa = nomorWA();
     var nilai = { companyAddress: P.companyAddress, companyPhone: P.companyPhone, companyEmail: P.companyEmail, waTampil: waTampil(wa), jamKerja: (w.kontak || {}).jamKerja };
@@ -276,6 +278,14 @@
       el.classList.toggle('is-wide', !!lw.data);
     });
     $$('.brand').forEach(function (b) { b.classList.toggle('no-name', !!(logo && lw.data && lw.nama === false)); });
+    // Tagline di bawah logo besar (Pengaturan → Branding)
+    $$('[data-logo]').forEach(function (el) {
+      var t = el.parentNode.querySelector('.brand-tagline');
+      var tampil = !!(P.taglineLogo && el.classList.contains('is-wide'));
+      if (tampil && !t) { t = document.createElement('span'); t.className = 'brand-tagline'; el.insertAdjacentElement('afterend', t); }
+      if (t) { t.hidden = !tampil; t.textContent = P.taglineLogo || ''; }
+      el.parentNode.classList.toggle('has-tagline', tampil);
+    });
     // Ikon tab: utamakan logo persegi aplikasi (logo website biasanya melebar)
     var ikon = /^data:image\/|^https:\/\//.test(P.logo || '') ? P.logo : logo;
     if (ikon) {

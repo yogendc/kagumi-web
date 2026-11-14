@@ -313,3 +313,12 @@ a:hover > .link-arrow svg, .link-arrow:hover svg, .news:hover .link-arrow svg { 
 @media (min-width: 961px) and (max-width: 1140px) { .nav a { padding: 8px 9px; font-size: 14px; } }
 .sec .track-head h2 { font-size: 20px; }
 .sec .form-card h2 { font-size: 24px; }
+
+/* Tagline di bawah logo besar */
+.brand.has-tagline { flex-direction: column; align-items: flex-start; gap: 1px; }
+.brand.has-tagline .brand-mark.is-wide { height: 40px; }
+.brand.has-tagline .brand-mark.is-wide img { max-height: 40px; }
+.brand-tagline { font-size: 10.5px; font-style: italic; font-weight: 600; letter-spacing: .06em; color: #9A7410; line-height: 1.2; white-space: nowrap; }
+.foot .brand-tagline { color: #E9C46A; }
+.foot .brand.has-tagline .brand-mark.is-wide { height: 52px; }
+@media (max-width: 560px) { .brand.has-tagline .brand-mark.is-wide { height: 34px; } .brand.has-tagline .brand-mark.is-wide img { max-height: 34px; } .brand-tagline { font-size: 9.5px; } }
