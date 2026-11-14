@@ -273,7 +273,12 @@
       el.classList.toggle('is-wide', !!lw.data);
     });
     $$('.brand').forEach(function (b) { b.classList.toggle('no-name', !!(logo && lw.data && lw.nama === false)); });
-    if (logo) { var ic = $('link[rel="icon"]'); if (ic) ic.href = logo; }
+    // Ikon tab: utamakan logo persegi aplikasi (logo website biasanya melebar)
+    var ikon = /^data:image\/|^https:\/\//.test(P.logo || '') ? P.logo : logo;
+    if (ikon) {
+      document.querySelectorAll('link[rel="icon"],link[rel="shortcut icon"],link[rel="apple-touch-icon"]').forEach(function (l) { l.href = ikon; });
+      try { localStorage.setItem('kgmWebIkon', ikon.length < 120000 ? ikon : ''); } catch (e) { /* abaikan */ }
+    }
     $$('[data-w]').forEach(function (el) {
       var f = R[el.getAttribute('data-w')];
       if (f) el.innerHTML = f(w, el);
