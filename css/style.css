@@ -296,11 +296,12 @@ a:hover > .link-arrow svg, .link-arrow:hover svg, .news:hover .link-arrow svg { 
 }
 
 /* Logo khusus website (boleh mendatar) */
-.brand-mark.is-wide { width: auto; max-width: 220px; height: 44px; border: 0; border-radius: 0; background: transparent; }
-.brand-mark.is-wide img { width: auto; height: 100%; max-width: 220px; object-fit: contain; background: transparent; }
+.brand-mark.is-wide { display: flex; align-items: center; width: auto; max-width: 230px; height: 48px; border: 0; border-radius: 0; background: transparent; overflow: visible; }
+.brand-mark.is-wide img { display: block; width: auto; height: auto; max-height: 48px; max-width: 230px; object-fit: contain; background: transparent; }
 .brand.no-name .brand-name { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
 .foot .brand-mark.is-wide { background: #fff; padding: 6px 10px; border-radius: 10px; height: 52px; box-sizing: border-box; }
-@media (max-width: 560px) { .brand-mark.is-wide { max-width: 160px; height: 38px; } .brand-mark.is-wide img { max-width: 160px; } }
+@media (max-width: 560px) { .brand-mark.is-wide { max-width: 170px; height: 42px; } .brand-mark.is-wide img { max-width: 170px; max-height: 42px; } }
+.foot .brand-mark.is-wide img { max-height: 40px; }
 
 /* Layanan keluhan */
 .klh-wrap { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, .85fr); gap: 32px; align-items: start; }

@@ -265,7 +265,10 @@
       var m = $('meta[name="theme-color"]'); if (m) m.content = P.themeColor;
     }
     // Logo: logo khusus website (Kelola Website) → bila kosong, logo aplikasi (Pengaturan → Branding)
-    var lw = w.logo || {}, logo = /^data:image\//.test(lw.data || '') ? lw.data : (/^data:image\/|^https:\/\//.test(P.logo || '') ? P.logo : '');
+    // Urutan: logo khusus website → logo dokumen (melebar) dari Pengaturan → logo kecil aplikasi
+    var lw = w.logo || {}, dok = /^data:image\//.test(P.logoDok || '') ? P.logoDok : '';
+    if (!lw.data && dok) lw = { data: dok, nama: false };
+    var logo = /^data:image\//.test(lw.data || '') ? lw.data : (/^data:image\/|^https:\/\//.test(P.logo || '') ? P.logo : '');
     $$('[data-logo]').forEach(function (el) {
       if (!logo) return;
       el.innerHTML = '<img alt="' + esc(n) + '" src="' + esc(logo) + '">';
