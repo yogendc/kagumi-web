@@ -224,6 +224,25 @@
       var f = [['Bidang usaha', w.bidangUsaha.join(', ')], ['Kantor', P.companyAddress], ['Jam kerja', (w.kontak || {}).jamKerja]];
       return f.filter(function (x) { return x[1]; }).map(function (x) { return '<div><dt>' + x[0] + '</dt><dd>' + esc(x[1]) + '</dd></div>'; }).join('');
     },
+    portoFilter: function () {
+      var list = P.portofolio || [], kat = [];
+      list.forEach(function (x) { if (x.kategori && kat.indexOf(x.kategori) < 0) kat.push(x.kategori); });
+      if (kat.length < 2) return '';
+      return [''].concat(kat).map(function (k) {
+        var n = k ? list.filter(function (x) { return x.kategori === k; }).length : list.length;
+        return '<a href="#" role="button" data-pk="' + esc(k) + '"' + (portoKat === k ? ' aria-current="true"' : '') + '>' + (k ? esc(k) : 'Semua') + ' <span class="porto-n">' + n + '</span></a>';
+      }).join('');
+    },
+    portoGrid: function () {
+      var list = (P.portofolio || []).filter(function (x) { return !portoKat || x.kategori === portoKat; });
+      if (!(P.portofolio || []).length) return '<div class="porto-empty"><svg><use href="#i-truck"/></svg><h3>Portofolio segera hadir</h3><p class="muted">Dokumentasi pekerjaan kami sedang disiapkan. Sementara itu, lihat <a href="layanan.html">layanan kami</a> atau <a href="kontak.html">hubungi tim kami</a>.</p></div>';
+      return list.map(kartuPorto).join('');
+    },
+    portoBeranda: function () {
+      var list = (P.portofolio || []).slice(0, 6);
+      var sec = $('[data-section="porto"]'); if (sec) sec.hidden = !list.length;
+      return list.map(kartuPorto).join('');
+    },
     berita: function () {
       var list = P.berita || [];
       var sec = $('[data-section="berita"]'); if (sec) sec.hidden = !list.length;
@@ -234,7 +253,46 @@
       }).join('');
     }
   };
-  var newsAll = false;
+  var newsAll = false, portoKat = '';
+  function kartuPorto(x) {
+    var meta = [x.lokasi, tglPanjang(x.tanggal)].filter(String).join(' · ');
+    var tag = PAGE === 'portofolio' ? 'button type="button" data-porto-open="' + esc(x.id) + '"' : 'a href="portofolio.html#p-' + esc(x.id) + '"';
+    return '<' + tag + ' class="porto-card" id="p-' + esc(x.id) + '"><span class="porto-ph" data-porto-img="' + esc(x.id) + '"></span><span class="porto-body"><span class="porto-kat">' + esc(x.kategori || 'Portofolio') + '</span><b>' + esc(x.judul) + '</b>' +
+      (meta ? '<small>' + meta + '</small>' : '') + '</span></' + (PAGE === 'portofolio' ? 'button' : 'a') + '>';
+  }
+  // Foto portofolio: tautan gambar Google Drive bila publik; bila gagal, lewat server (getPortoFoto)
+  var PORTO_SIAP = {};
+  function fotoPorto(x, cb) {
+    var key = x.id + ':' + x.v;
+    if (PORTO_SIAP[key]) { cb(PORTO_SIAP[key]); return; }
+    var lewatServer = function () {
+      api('getPortoFoto', [x.id], 30000).then(function (r) { if (r.success) { PORTO_SIAP[key] = r.data; cb(r.data); } }).catch(function () { /* tanpa foto */ });
+    };
+    if (!x.url) { lewatServer(); return; }
+    var img = new Image();
+    img.onload = function () { PORTO_SIAP[key] = x.url; cb(x.url); };
+    img.onerror = lewatServer;
+    img.src = x.url;
+  }
+  function terapkanPorto() {
+    $$('[data-porto-img]').forEach(function (el) {
+      if (el.firstChild) return;
+      var x = (P.portofolio || []).filter(function (p) { return p.id === el.getAttribute('data-porto-img'); })[0];
+      if (!x) return;
+      fotoPorto(x, function (src) { if (!el.firstChild) el.innerHTML = '<img alt="' + esc(x.judul) + '" loading="lazy" src="' + esc(src) + '">'; });
+    });
+  }
+  function bukaPorto(id) {
+    var x = (P.portofolio || []).filter(function (p) { return p.id === id; })[0], d = $('#portoDlg');
+    if (!x || !d) return;
+    $('#portoDlgKat').textContent = x.kategori || 'Portofolio';
+    $('#portoDlgTitle').textContent = x.judul;
+    $('#portoDlgMeta').innerHTML = [esc(x.lokasi), tglPanjang(x.tanggal)].filter(String).join(' · ');
+    $('#portoDlgBody').innerHTML = x.deskripsi ? paragraf(x.deskripsi) : '';
+    var box = $('#portoDlgImg'); box.innerHTML = '';
+    fotoPorto(x, function (src) { box.innerHTML = '<img alt="' + esc(x.judul) + '" src="' + esc(src) + '">'; });
+    if (d.showModal) { if (!d.open) d.showModal(); } else d.setAttribute('open', '');
+  }
 
   function terapkan() {
     var w = W();
@@ -306,6 +364,7 @@
     });
     $$('[data-maps-link]').forEach(function (a) { a.hidden = !q; a.href = 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(q); });
     terapkanFoto();
+    terapkanPorto();
   }
 
   // ── Foto (latar halaman & foto layanan) ──
@@ -374,6 +433,11 @@
       return;
     }
     if (e.target.id === 'newsMore') { newsAll = true; terapkan(); }
+    var pk = e.target.closest && e.target.closest('[data-pk]');
+    if (pk) { e.preventDefault(); portoKat = pk.getAttribute('data-pk'); terapkan(); return; }
+    var po = e.target.closest && e.target.closest('[data-porto-open]');
+    if (po) { bukaPorto(po.getAttribute('data-porto-open')); try { history.replaceState(null, '', '#p-' + po.getAttribute('data-porto-open')); } catch (e2) { /* abaikan */ } return; }
+    if (e.target.id === 'portoDlg') e.target.close();
     if (e.target.id === 'newsDlg') e.target.close(); // klik di luar kotak
   });
 
@@ -561,5 +625,6 @@
     store.set('kgmWeb2', P);
     terapkan();
     if (PAGE === 'layanan') keHash();
+    if (PAGE === 'portofolio' && /^#p-/.test(location.hash)) bukaPorto(location.hash.slice(3));
   }).catch(function () { /* isi bawaan tetap tampil */ });
 })();
