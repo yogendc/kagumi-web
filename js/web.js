@@ -98,6 +98,7 @@
  }
 };
   var PAGE = document.body.getAttribute('data-page');
+  if (PAGE === 'portofolio') { location.replace('galeri.html' + location.hash); return; } // alamat lama
   var $ = function (s, r) { return (r || document).querySelector(s); };
   var $$ = function (s, r) { return Array.prototype.slice.call((r || document).querySelectorAll(s)); };
   var esc = function (s) {
@@ -236,7 +237,7 @@
     },
     portoGrid: function () {
       var list = (P.portofolio || []).filter(function (x) { return !portoKat || x.kategori === portoKat; });
-      if (!(P.portofolio || []).length) return '<div class="porto-empty"><svg><use href="#i-truck"/></svg><h3>Portofolio segera hadir</h3><p class="muted">Dokumentasi pekerjaan kami sedang disiapkan. Sementara itu, lihat <a href="layanan.html">layanan kami</a> atau <a href="kontak.html">hubungi tim kami</a>.</p></div>';
+      if (!(P.portofolio || []).length) return '<div class="porto-empty"><svg><use href="#i-truck"/></svg><h3>Galeri segera hadir</h3><p class="muted">Dokumentasi pekerjaan kami sedang disiapkan. Sementara itu, lihat <a href="layanan.html">layanan kami</a> atau <a href="kontak.html">hubungi tim kami</a>.</p></div>';
       return list.map(kartuPorto).join('');
     },
     portoBeranda: function () {
@@ -257,9 +258,9 @@
   var newsAll = false, portoKat = '';
   function kartuPorto(x) {
     var meta = [x.lokasi, tglPanjang(x.tanggal)].filter(String).join(' · ');
-    var tag = PAGE === 'portofolio' ? 'button type="button" data-porto-open="' + esc(x.id) + '"' : 'a href="portofolio.html#p-' + esc(x.id) + '"';
-    return '<' + tag + ' class="porto-card" id="p-' + esc(x.id) + '"><span class="porto-ph" data-porto-img="' + esc(x.id) + '"></span><span class="porto-body"><span class="porto-kat">' + esc(x.kategori || 'Portofolio') + '</span><b>' + esc(x.judul) + '</b>' +
-      (meta ? '<small>' + meta + '</small>' : '') + '</span></' + (PAGE === 'portofolio' ? 'button' : 'a') + '>';
+    var tag = PAGE === 'galeri' ? 'button type="button" data-porto-open="' + esc(x.id) + '"' : 'a href="galeri.html#p-' + esc(x.id) + '"';
+    return '<' + tag + ' class="porto-card" id="p-' + esc(x.id) + '"><span class="porto-ph" data-porto-img="' + esc(x.id) + '"></span><span class="porto-body"><span class="porto-kat">' + esc(x.kategori || 'Galeri') + '</span><b>' + esc(x.judul) + '</b>' +
+      (meta ? '<small>' + meta + '</small>' : '') + '</span></' + (PAGE === 'galeri' ? 'button' : 'a') + '>';
   }
   // Foto portofolio: tautan gambar Google Drive bila publik; bila gagal, lewat server (getPortoFoto)
   var PORTO_SIAP = {};
@@ -286,7 +287,7 @@
   function bukaPorto(id) {
     var x = (P.portofolio || []).filter(function (p) { return p.id === id; })[0], d = $('#portoDlg');
     if (!x || !d) return;
-    $('#portoDlgKat').textContent = x.kategori || 'Portofolio';
+    $('#portoDlgKat').textContent = x.kategori || 'Galeri';
     $('#portoDlgTitle').textContent = x.judul;
     $('#portoDlgMeta').innerHTML = [esc(x.lokasi), tglPanjang(x.tanggal)].filter(String).join(' · ');
     $('#portoDlgBody').innerHTML = x.deskripsi ? paragraf(x.deskripsi) : '';
@@ -626,6 +627,6 @@
     store.set('kgmWeb2', P);
     terapkan();
     if (PAGE === 'layanan') keHash();
-    if (PAGE === 'portofolio' && /^#p-/.test(location.hash)) bukaPorto(location.hash.slice(3));
+    if (PAGE === 'galeri' && /^#p-/.test(location.hash)) bukaPorto(location.hash.slice(3));
   }).catch(function () { /* isi bawaan tetap tampil */ });
 })();
