@@ -8,7 +8,7 @@
   var DEF = {
  "heroJudul": "Mitra logistik untuk barang, armada, dan kendaraan Anda.",
  "heroTeks": "Kami melayani jasa pengiriman barang, sewa truk beserta pengemudi, serta pengiriman mobil dan alat berat antarkota. Setiap kiriman memiliki surat jalan atau resi bernomor yang bisa Anda lacak sendiri.",
- "profilSingkat": "KAGUMI Transport adalah perusahaan jasa transportasi dan logistik yang melayani pelanggan perorangan maupun perusahaan. Kami mengutamakan ketepatan waktu, keamanan muatan, dan administrasi yang tertib, mulai dari pemesanan sampai tagihan.",
+ "profilSingkat": "KAGUMI Cargo & Auto Logistics adalah perusahaan jasa transportasi dan logistik yang melayani pelanggan perorangan maupun perusahaan. Kami mengutamakan ketepatan waktu, keamanan muatan, dan administrasi yang tertib, mulai dari pemesanan sampai tagihan.",
  "visi": "Menjadi perusahaan transportasi dan logistik yang dipercaya pelanggan karena tepat waktu, aman, dan transparan.",
  "misi": [
   "Menyediakan armada yang terawat dan pengemudi yang berpengalaman.",
@@ -39,8 +39,8 @@
    "teks": "Lunas, termin, atau invoice surat kembali untuk pelanggan tetap."
   }
  ],
- "sejarah": "KAGUMI Transport berawal dari usaha sewa truk untuk kebutuhan muatan lokal. Seiring bertambahnya kepercayaan pelanggan, layanan kami berkembang ke pengiriman mobil antarkota dan pengiriman paket melalui jalur darat, laut, dan kereta.\n\nHingga kini kami terus menambah armada, memperluas jaringan rekanan ekspedisi, dan membenahi sistem administrasi agar setiap kiriman tercatat dan dapat dipantau.",
- "profil": "KAGUMI Transport bergerak di bidang jasa transportasi darat dan logistik. Kami melayani pengiriman barang per koli maupun muatan penuh, sewa truk beserta pengemudi, serta pengiriman mobil dan alat berat.\n\nSetiap order dikelola dengan sistem administrasi terpadu: surat jalan bernomor, inspeksi kendaraan sebelum berangkat, tanda terima saat barang diserahkan, dan invoice yang tercatat rapi.",
+ "sejarah": "KAGUMI Cargo & Auto Logistics berawal dari usaha sewa truk untuk kebutuhan muatan lokal. Seiring bertambahnya kepercayaan pelanggan, layanan kami berkembang ke pengiriman mobil antarkota dan pengiriman paket melalui jalur darat, laut, dan kereta.\n\nHingga kini kami terus menambah armada, memperluas jaringan rekanan ekspedisi, dan membenahi sistem administrasi agar setiap kiriman tercatat dan dapat dipantau.",
+ "profil": "KAGUMI Cargo & Auto Logistics bergerak di bidang jasa transportasi darat dan logistik. Kami melayani pengiriman barang per koli maupun muatan penuh, sewa truk beserta pengemudi, serta pengiriman mobil dan alat berat.\n\nSetiap order dikelola dengan sistem administrasi terpadu: surat jalan bernomor, inspeksi kendaraan sebelum berangkat, tanda terima saat barang diserahkan, dan invoice yang tercatat rapi.",
  "legalitas": [
   {
    "nama": "Akta Pendirian Perusahaan",
@@ -140,7 +140,8 @@
   // ── Data profil & isi ──
   var P = store.get('kgmWeb2') || {};
   function W() { return P.web || DEF; }
-  function nama() { return P.companyName || P.appName || 'KAGUMI Transport'; }
+  // Website selalu memakai nama merek (Nama aplikasi di Pengaturan). Nama badan usaha (PT) hanya untuk kop surat.
+  function nama() { return P.appName || 'KAGUMI Cargo & Auto Logistics'; }
   function nomorWA() {
     var raw = String((W().kontak || {}).wa || CFG.WA || '').replace(/\D/g, '');
     if (!raw) {
