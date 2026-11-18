@@ -59,7 +59,7 @@
 
 <main id="isi">
 <section class="hero" data-foto="hero">
-  <div class="wrap hero-in">
+  <div class="wrap hero-in hero-solo">
     <div class="hero-copy">
       <p class="eyebrow" data-w="bidangUsahaDot">Pengiriman barang · Trucking · Mobil &amp; alat berat</p>
       <h1 data-w="heroJudul"></h1>
@@ -68,30 +68,12 @@
         <a class="btn btn-primary" href="layanan.html">Lihat layanan<svg><use href="#i-arrow"/></svg></a>
         <a class="btn btn-ghost" data-wa data-wa-text="penawaran" hidden><svg><use href="#i-wa"/></svg><span>Minta penawaran</span></a>
       </div>
+      <form class="hero-resi" action="lacak.html" method="get" role="search" aria-label="Cek resi">
+        <svg aria-hidden="true"><use href="#i-search"/></svg>
+        <input name="resi" required maxlength="30" autocomplete="off" autocapitalize="characters" spellcheck="false" placeholder="Cek resi, mis. KGM-P00012011126" aria-label="Nomor resi atau surat jalan">
+        <button class="btn btn-primary" type="submit">Lacak</button>
+      </form>
     </div>
-    <div class="track-card" id="lacak">
-  <div class="track-head">
-    <span class="track-ico"><svg><use href="#i-search"/></svg></span>
-    <div>
-      <h2>Cek resi</h2>
-      <p>Lacak status kiriman dengan nomor resi atau surat jalan.</p>
-    </div>
-  </div>
-  <form id="trackForm" novalidate>
-    <label class="fld">
-      <span>No. resi / surat jalan</span>
-      <input id="tNo" name="no" autocomplete="off" autocapitalize="characters" spellcheck="false" placeholder="mis. KGM-P00012011126" maxlength="30" required>
-    </label>
-    <label class="fld">
-      <span>4 digit terakhir no. HP</span>
-      <input id="tHp" name="hp" inputmode="numeric" pattern="[0-9]*" autocomplete="off" placeholder="mis. 3321" maxlength="4" required>
-      <small>No. HP pengirim, penerima, atau PIC yang tercantum di dokumen.</small>
-    </label>
-    <button class="btn btn-primary btn-block" id="tBtn" type="submit"><svg><use href="#i-search"/></svg><span>Lacak</span></button>
-    <p class="t-msg" id="tMsg" role="alert" hidden></p>
-  </form>
-  <div class="t-result" id="tResult" hidden aria-live="polite"></div>
-</div>
   </div>
 </section>
 

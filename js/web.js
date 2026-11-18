@@ -517,7 +517,7 @@
     // Tautan langsung: lacak.html?resi=PKT-261111-1 → nomor terisi, tinggal isi 4 digit HP.
     var q = (location.search.match(/[?&]resi=([^&]+)/) || [])[1];
     if (q) {
-      try { $('#tNo').value = decodeURIComponent(q).toUpperCase().slice(0, 30); } catch (e) { /* abaikan */ }
+      try { $('#tNo').value = decodeURIComponent(q.replace(/\+/g, ' ')).replace(/\s+/g, '').toUpperCase().slice(0, 30); } catch (e) { /* abaikan */ }
       setTimeout(function () { $('#lacak').scrollIntoView({ block: 'start' }); $('#tHp').focus({ preventScroll: true }); }, 50);
     }
   }
