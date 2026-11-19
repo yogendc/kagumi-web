@@ -153,9 +153,9 @@ a:hover > .link-arrow svg, .link-arrow:hover svg, .news:hover .link-arrow svg { 
 .vm-card { background: #fff; border: 1px solid var(--line); border-radius: var(--radius); padding: 28px; }
 .vm-ico { width: 44px; height: 44px; border-radius: 12px; background: var(--primary); color: #fff; display: grid; place-items: center; font-size: 22px; margin-bottom: 16px; }
 .vm-card h2 { font-size: 24px; }
-.vm-visi { font-family: var(--display); font-size: 20px; font-weight: 600; line-height: 1.45; margin-top: 12px; }
+.vm-visi { font-size: 16.5px; font-weight: 400; line-height: 1.7; margin-top: 12px; color: #33443d; }
 .vm-misi { margin: 12px 0 0; padding-left: 22px; display: grid; gap: 8px; color: #33443d; }
-.vm-misi li::marker { color: var(--primary); font-weight: 700; }
+.vm-misi li::marker { color: var(--primary); font-weight: 400; }
 
 .svc-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; }
 .svc { display: flex; flex-direction: column; border: 1px solid var(--line); border-radius: var(--radius); padding: 24px; background: #fff; text-decoration: none; color: var(--ink); transition: border-color .15s, box-shadow .15s; }

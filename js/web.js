@@ -178,7 +178,12 @@
   var R = {
     heroJudul: function (w) { return esc(w.heroJudul); },
     heroTeks: function (w) { return esc(w.heroTeks); },
-    visi: function (w) { return esc(w.visi); },
+    // Visi: baris baru mengikuti Enter dari pengaturan; bila tidak ada, tiap kalimat tampil di baris baru
+    visi: function (w) {
+      var v = String(w.visi || '').trim();
+      var baris = (/\n/.test(v) ? v : v.replace(/([.!?])\s+(?=[A-Z])/g, '$1\n')).split(/\n+/);
+      return baris.map(function (x) { return esc(x.trim()); }).filter(String).join('<br>');
+    },
     profilSingkat: function (w) { return paragraf(w.profilSingkat); },
     sejarah: function (w) { return paragraf(w.sejarah); },
     profil: function (w) { return paragraf(w.profil); },
