@@ -199,7 +199,7 @@
     },
     layananRingkas: function (w) {
       return w.layanan.map(function (l) {
-        return '<a class="svc" href="layanan.html#' + esc(l.kunci) + '"><div class="svc-photo" data-foto-img="' + esc(l.kunci) + '" hidden></div><span class="svc-ico"><svg><use href="#' + ICON_LAY[l.kunci] + '"/></svg></span><h3>' + esc(l.judul) +
+        return '<a class="svc" href="layanan.html#' + esc(l.kunci) + '"><div class="svc-photo" data-foto-img="' + esc(l.kunci) + '" hidden></div><h3>' + esc(l.judul) +
           '</h3><p>' + esc(l.teks) + '</p><span class="link-arrow">Selengkapnya<svg><use href="#i-arrow"/></svg></span></a>';
       }).join('');
     },
