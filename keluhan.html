@@ -13,7 +13,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/style.css?v=2.1.0">
+  <link rel="stylesheet" href="css/style.css?v=2.2.0">
 </head>
 <body data-page="keluhan">
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
@@ -72,12 +72,12 @@
   <div class="wrap klh-wrap">
     <div class="form-card" id="ajukan">
       <h2>Ajukan keluhan</h2>
-      <p class="muted">Isi nomor dokumen dan 4 digit terakhir no. HP yang tercantum di dokumen (pengirim, penerima, atau PIC).</p>
+      <p class="muted">Isi nomor dokumen dan kode lacak yang kami kirim lewat WhatsApp saat order dikonfirmasi.</p>
       <form id="kForm" novalidate>
         <div class="hp-trap" aria-hidden="true"><label>Situs web <input name="situs" tabindex="-1" autocomplete="off"></label></div>
         <div class="fld-2">
           <label class="fld"><span>No. resi / surat jalan <i>*</i></span><input name="NoResi" id="kResi" autocapitalize="characters" spellcheck="false" maxlength="30" placeholder="mis. KGM-P00012011126"></label>
-          <label class="fld"><span>4 digit terakhir no. HP di dokumen <i>*</i></span><input name="HP4" inputmode="numeric" maxlength="4" placeholder="mis. 3321"></label>
+          <label class="fld"><span>Kode lacak <i>*</i></span><input name="KodeLacak" autocapitalize="characters" spellcheck="false" autocomplete="off" maxlength="8" placeholder="mis. K7M2QX"><small><button type="button" class="link-btn" data-kirim-kode="#kResi">Lupa kode? Kirim ke WhatsApp</button></small></label>
         </div>
         <div class="fld-2">
           <label class="fld"><span>Nama Anda <i>*</i></span><input name="NamaPelapor" maxlength="80" autocomplete="name"></label>
@@ -109,7 +109,7 @@
       </div>
       <form id="sForm" novalidate>
         <label class="fld"><span>No. keluhan</span><input id="sNo" autocapitalize="characters" spellcheck="false" maxlength="30" placeholder="KLH-261112-1"></label>
-        <label class="fld"><span>4 digit terakhir no. HP pelapor</span><input id="sHp" inputmode="numeric" maxlength="4" placeholder="mis. 2222"><small>No. HP yang Anda isi saat mengajukan keluhan.</small></label>
+        <label class="fld"><span>Kode lacak kiriman</span><input id="sKode" autocapitalize="characters" spellcheck="false" autocomplete="off" maxlength="8" placeholder="mis. K7M2QX"><small>Kode lacak dari WhatsApp untuk kiriman yang dikeluhkan.</small></label>
         <button class="btn btn-primary btn-block" id="sBtn" type="submit"><svg><use href="#i-search"/></svg><span>Cek status</span></button>
         <p class="t-msg" id="sMsg" role="alert" hidden></p>
       </form>
@@ -143,7 +143,7 @@
 </footer>
 <a class="wa-float" data-wa data-wa-text="umum" hidden aria-label="Chat WhatsApp"><svg><use href="#i-wa"/></svg></a>
 
-<script src="js/config.js?v=2.1.0"></script>
-<script src="js/web.js?v=2.1.0"></script>
+<script src="js/config.js?v=2.2.0"></script>
+<script src="js/web.js?v=2.2.0"></script>
 </body>
 </html>

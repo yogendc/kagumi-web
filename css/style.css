@@ -104,6 +104,8 @@ a:hover > .link-arrow svg, .link-arrow:hover svg, .news:hover .link-arrow svg { 
 #tHp { letter-spacing: .3em; font-variant-numeric: tabular-nums; }
 #tNo::placeholder { text-transform: none; letter-spacing: 0; }
 #tHp::placeholder { letter-spacing: 0; }
+.link-btn { background: none; border: 0; padding: 0; font: inherit; color: var(--primary, #006C49); text-decoration: underline; cursor: pointer; }
+.t-msg.is-info { background: var(--primary-soft, #e6f2ed); color: var(--text, #14211c); }
 .t-msg { margin: 12px 0 0; padding: 10px 12px; border-radius: 10px; background: var(--warn-soft); color: var(--warn); font-size: 14px; }
 .t-result { margin-top: 20px; padding-top: 20px; border-top: 1px dashed var(--line); }
 .t-top { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; }

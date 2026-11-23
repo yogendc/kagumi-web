@@ -487,22 +487,35 @@
     box.innerHTML = html;
     box.hidden = false;
   }
-  function pesan(id, teks) { var m = $(id); m.textContent = teks || ''; m.hidden = !teks; }
+  function pesan(id, teks, info) { var m = $(id); m.textContent = teks || ''; m.hidden = !teks; m.classList.toggle('is-info', !!info); }
+  function normalKode(v) { return String(v || '').toUpperCase().replace(/[^A-Z0-9]/g, '').slice(0, 6); }
+  // 4.6.4: "Kirim kode ke WhatsApp" — kode hanya dikirim ke nomor yang tercatat di order, tidak pernah tampil di layar
+  function kirimKode(noEl, msgId, btn) {
+    var no = noEl.value.trim().toUpperCase().replace(/\s+/g, '');
+    noEl.value = no;
+    if (!no) { pesan(msgId, 'Isi nomor resi / surat jalan dulu, lalu klik lagi.'); noEl.focus(); return; }
+    btn.disabled = true; var t = btn.textContent; btn.textContent = 'Mengirim…';
+    api('kirimUlangKode', [no]).then(function (res) {
+      if (!res.success) throw new Error(/Aksi tidak dikenal/.test(res.message) ? 'Fitur kirim kode belum tersedia. Silakan hubungi kami lewat WhatsApp.' : res.message);
+      pesan(msgId, res.message, true);
+    }).catch(function (e) { pesan(msgId, e.message || 'Terjadi kesalahan. Coba lagi.'); })
+      .then(function () { btn.disabled = false; btn.textContent = t; });
+  }
   var tf = $('#trackForm');
   if (tf) {
     tf.addEventListener('submit', function (ev) {
       ev.preventDefault();
-      var noEl = $('#tNo'), hpEl = $('#tHp'), btn = $('#tBtn');
+      var noEl = $('#tNo'), kdEl = $('#tKode'), btn = $('#tBtn');
       var no = noEl.value.trim().toUpperCase().replace(/\s+/g, '');
-      var hp = hpEl.value.replace(/\D/g, '');
-      noEl.value = no; hpEl.value = hp;
+      var kd = normalKode(kdEl.value);
+      noEl.value = no; kdEl.value = kd;
       noEl.setAttribute('aria-invalid', String(!no));
-      hpEl.setAttribute('aria-invalid', String(hp.length !== 4));
+      kdEl.setAttribute('aria-invalid', String(kd.length !== 6));
       if (!no) { pesan('#tMsg', 'Isi nomor resi atau surat jalan.'); noEl.focus(); return; }
-      if (hp.length !== 4) { pesan('#tMsg', 'Isi 4 digit terakhir no. HP (angka saja).'); hpEl.focus(); return; }
+      if (kd.length !== 6) { pesan('#tMsg', 'Isi kode lacak 6 karakter dari WhatsApp. Belum punya? Klik "Kirim ke WhatsApp".'); kdEl.focus(); return; }
       pesan('#tMsg', ''); $('#tResult').hidden = true;
       btn.disabled = true; btn.querySelector('span').textContent = 'Mencari…';
-      api('lacakResi', [no, hp]).then(function (res) {
+      api('lacakResi', [no, kd]).then(function (res) {
         if (!res.success) {
           if (/Aksi tidak dikenal/.test(res.message)) {
             console.warn('Server belum mendukung lacakResi — perbarui Kode.gs dan buat Versi baru penerapan.');
@@ -518,12 +531,18 @@
         btn.disabled = false; btn.querySelector('span').textContent = 'Lacak';
       });
     });
-    $('#tHp').addEventListener('input', function () { this.value = this.value.replace(/\D/g, '').slice(0, 4); });
-    // Tautan langsung: lacak.html?resi=PKT-261111-1 → nomor terisi, tinggal isi 4 digit HP.
-    var q = (location.search.match(/[?&]resi=([^&]+)/) || [])[1];
+    $('#tKode').addEventListener('input', function () { var v = normalKode(this.value); if (this.value !== v) this.value = v; });
+    $('#tKirim').addEventListener('click', function () { kirimKode($('#tNo'), '#tMsg', this); });
+    // Tautan dari WhatsApp: lacak.html?resi=KGM-…&kode=K7M2QX → terisi & langsung dicari; kode dihapus dari alamat web.
+    var q = (location.search.match(/[?&]resi=([^&]+)/) || [])[1], qk = (location.search.match(/[?&]kode=([^&]+)/) || [])[1];
     if (q) {
       try { $('#tNo').value = decodeURIComponent(q.replace(/\+/g, ' ')).replace(/\s+/g, '').toUpperCase().slice(0, 30); } catch (e) { /* abaikan */ }
-      setTimeout(function () { $('#lacak').scrollIntoView({ block: 'start' }); $('#tHp').focus({ preventScroll: true }); }, 50);
+      if (qk) { try { $('#tKode').value = normalKode(decodeURIComponent(qk)); } catch (e) { /* abaikan */ } try { history.replaceState(null, '', '?resi=' + encodeURIComponent($('#tNo').value) + '#lacak'); } catch (e) { /* abaikan */ } }
+      setTimeout(function () {
+        $('#lacak').scrollIntoView({ block: 'start' });
+        if ($('#tKode').value.length === 6) tf.requestSubmit ? tf.requestSubmit() : tf.dispatchEvent(new Event('submit', { cancelable: true }));
+        else $('#tKode').focus({ preventScroll: true });
+      }, 50);
     }
   }
 
@@ -570,13 +589,17 @@
     var KLH_ST = { 'Diterima': '', 'Sedang ditangani': '', 'Menunggu konfirmasi Anda': '', 'Selesai': 'is-done', 'Dibatalkan': 'is-cancel' };
     var resiQ = (location.search.match(/[?&]resi=([^&]+)/) || [])[1];
     if (resiQ) try { $('#kResi').value = decodeURIComponent(resiQ).toUpperCase(); } catch (e) { /* abaikan */ }
-    kf.querySelector('[name=HP4]').addEventListener('input', function () { this.value = this.value.replace(/\D/g, '').slice(0, 4); });
+    kf.querySelector('[name=KodeLacak]').addEventListener('input', function () { var v = normalKode(this.value); if (this.value !== v) this.value = v; });
+    $$('[data-kirim-kode]').forEach(function (b) { b.addEventListener('click', function () { kirimKode($(b.getAttribute('data-kirim-kode')), '#kMsg', b); }); });
+    var kodeQ = (location.search.match(/[?&]kode=([^&]+)/) || [])[1];
+    if (kodeQ) { try { kf.querySelector('[name=KodeLacak]').value = normalKode(decodeURIComponent(kodeQ)); history.replaceState(null, '', location.pathname + (resiQ ? '?resi=' + resiQ : '') + location.hash); } catch (e) { /* abaikan */ } }
     kf.addEventListener('submit', function (ev) {
       ev.preventDefault();
       var d = {};
       $$('input,select,textarea', kf).forEach(function (el) { if (el.name) d[el.name] = el.value.trim(); });
       d.NoResi = d.NoResi.toUpperCase().replace(/\s+/g, ''); kf.querySelector('[name=NoResi]').value = d.NoResi;
-      var salah = !d.NoResi ? 'Isi nomor resi atau surat jalan.' : d.HP4.length !== 4 ? 'Isi 4 digit terakhir no. HP yang tercantum di dokumen.'
+      d.KodeLacak = normalKode(d.KodeLacak);
+      var salah = !d.NoResi ? 'Isi nomor resi atau surat jalan.' : d.KodeLacak.length !== 6 ? 'Isi kode lacak 6 karakter dari WhatsApp. Lupa? Klik "Kirim ke WhatsApp".'
         : !d.NamaPelapor ? 'Isi nama Anda.' : d.HPPelapor.replace(/\D/g, '').length < 9 ? 'Isi no. HP / WhatsApp yang aktif.'
         : d.EmailPelapor && !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(d.EmailPelapor) ? 'Format email tidak valid.'
         : !d.Kategori ? 'Pilih jenis keluhan.' : d.Deskripsi.length < 10 ? 'Ceritakan keluhan minimal 10 karakter.' : '';
@@ -587,7 +610,7 @@
         if (!res.success) throw new Error(/Aksi tidak dikenal/.test(res.message) ? 'Formulir keluhan sedang tidak tersedia. Silakan hubungi kami lewat WhatsApp.' : res.message);
         var no = res.data.noKeluhan;
         kf.hidden = true; $('#kDone').hidden = false; $('#kNo').textContent = no;
-        $('#sNo').value = no; $('#sHp').value = d.HPPelapor.replace(/\D/g, '').slice(-4);
+        $('#sNo').value = no; $('#sKode').value = d.KodeLacak;
         var n = nomorWA(), w = $('#kWa');
         w.hidden = !n;
         if (n) w.href = 'https://wa.me/' + n + '?text=' + encodeURIComponent('Halo ' + nama() + ', saya ' + d.NamaPelapor + ' sudah mengajukan keluhan no. ' + no + ' untuk resi ' + d.NoResi + ' (' + d.Kategori + ').');
@@ -595,12 +618,12 @@
       }).catch(function (e) { pesan('#kMsg', e.message); })
         .then(function () { btn.disabled = false; btn.querySelector('span').textContent = 'Kirim keluhan'; });
     });
-    $('#sHp').addEventListener('input', function () { this.value = this.value.replace(/\D/g, '').slice(0, 4); });
+    $('#sKode').addEventListener('input', function () { var v = normalKode(this.value); if (this.value !== v) this.value = v; });
     $('#sForm').addEventListener('submit', function (ev) {
       ev.preventDefault();
-      var no = $('#sNo').value.trim().toUpperCase().replace(/\s+/g, ''), hp = $('#sHp').value.replace(/\D/g, '');
+      var no = $('#sNo').value.trim().toUpperCase().replace(/\s+/g, ''), hp = normalKode($('#sKode').value);
       $('#sNo').value = no;
-      if (!no || hp.length !== 4) { pesan('#sMsg', 'Isi nomor keluhan dan 4 digit terakhir no. HP pelapor.'); return; }
+      if (!no || hp.length !== 6) { pesan('#sMsg', 'Isi nomor keluhan dan kode lacak kiriman (6 karakter dari WhatsApp).'); return; }
       pesan('#sMsg', ''); $('#sResult').hidden = true;
       var btn = $('#sBtn'); btn.disabled = true; btn.querySelector('span').textContent = 'Mencari…';
       api('cekKeluhan', [no, hp]).then(function (res) {
@@ -619,7 +642,7 @@
         .then(function () { btn.disabled = false; btn.querySelector('span').textContent = 'Cek status'; });
     });
     var klhQ = (location.search.match(/[?&]klh=([^&]+)/) || [])[1];
-    if (klhQ) { try { $('#sNo').value = decodeURIComponent(klhQ).toUpperCase(); } catch (e) { /* abaikan */ } setTimeout(function () { $('#status').scrollIntoView(); $('#sHp').focus({ preventScroll: true }); }, 50); }
+    if (klhQ) { try { $('#sNo').value = decodeURIComponent(klhQ).toUpperCase(); } catch (e) { /* abaikan */ } setTimeout(function () { $('#status').scrollIntoView(); $('#sKode').focus({ preventScroll: true }); }, 50); }
   }
 
   // ── Mulai: tampilkan isi tersimpan/bawaan, lalu segarkan dari server ──
