@@ -645,6 +645,43 @@
     if (klhQ) { try { $('#sNo').value = decodeURIComponent(klhQ).toUpperCase(); } catch (e) { /* abaikan */ } setTimeout(function () { $('#status').scrollIntoView(); $('#sKode').focus({ preventScroll: true }); }, 50); }
   }
 
+  // ── Animasi halus: elemen muncul saat digulir, header menipis saat digulir (4.6.5) ──
+  // Status awal tersembunyi diatur CSS (html.anim), jadi tidak ada kedipan. Isi yang digambar ulang setelah data
+  // server datang langsung tampil tanpa animasi ulang bila wadahnya sudah pernah terlihat.
+  window.__kgmAnim = true;
+  (function animasi() {
+    var root = document.documentElement, top = $('.top'), adaGulir = false;
+    function gulir() { var g = (window.scrollY || 0) > 8; if (g !== adaGulir) { adaGulir = g; if (top) top.classList.toggle('is-scrolled', g); } }
+    window.addEventListener('scroll', gulir, { passive: true }); gulir();
+    if (!root.classList.contains('anim') || root.classList.contains('anim-off')) return;
+    if (!('IntersectionObserver' in window) || !('MutationObserver' in window)) { root.classList.add('anim-off'); return; }
+    var SEL = '.sec-head, .split > *, .split-narrow > *, .vm-card, .svc, .why-item, .news, .porto-card, .facts, .legal li, .contact > *, .svc-detail, .klh-wrap > *, .cta-in > *, .foot-grid > *, .porto-empty';
+    function selesai(el, jeda) { setTimeout(function () { el.classList.add('rv-done'); el.classList.remove('rv-now'); }, jeda); }
+    function tampil(el) {
+      el.classList.add('is-in');
+      if (el.parentNode && el.parentNode.setAttribute) el.parentNode.setAttribute('data-rv-seen', '1');
+      selesai(el, 900 + (parseInt(el.style.getPropertyValue('--rv-d'), 10) || 0));
+    }
+    var io = new IntersectionObserver(function (daftar) {
+      daftar.forEach(function (e) { if (e.isIntersecting) { io.unobserve(e.target); tampil(e.target); } });
+    }, { rootMargin: '0px 0px -6% 0px', threshold: 0.08 });
+    function pindai() {
+      var urut = [];
+      $$(SEL).forEach(function (el) {
+        if (el.hasAttribute('data-rv')) return;
+        el.setAttribute('data-rv', '');
+        var p = el.parentNode;
+        if (p && p.getAttribute && p.getAttribute('data-rv-seen')) { el.classList.add('rv-now', 'is-in'); selesai(el, 50); return; }
+        var n = 0; for (var i = 0; i < urut.length; i++) if (urut[i][0] === p) { n = ++urut[i][1]; break; }
+        if (!n) urut.push([p, 0]);
+        el.style.setProperty('--rv-d', Math.min(n, 5) * 90 + 'ms');
+        io.observe(el);
+      });
+    }
+    pindai();
+    new MutationObserver(pindai).observe(document.body, { childList: true, subtree: true });
+  })();
+
   // ── Mulai: tampilkan isi tersimpan/bawaan, lalu segarkan dari server ──
   terapkan();
   function keHash() { if (location.hash && PAGE !== 'lacak') { var t = document.getElementById(location.hash.slice(1)); if (t) t.scrollIntoView(); } }
