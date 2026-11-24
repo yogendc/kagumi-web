@@ -391,7 +391,8 @@
     };
     if (!f.url) { lewatServer(); return; }
     var img = new Image();
-    img.onload = function () { FOTO_SIAP[key] = f.url; cb(f.url); };
+    // tunggu foto selesai diurai sebelum ditampilkan, supaya animasi pudar tidak tersendat
+    img.onload = function () { var go = function () { FOTO_SIAP[key] = f.url; cb(f.url); }; if (img.decode) img.decode().then(go, go); else go(); };
     img.onerror = lewatServer;
     img.src = f.url;
   }
@@ -401,8 +402,11 @@
       var f = foto[el.getAttribute('data-foto')];
       if (!f) { el.classList.remove('has-photo'); return; }
       ambilFoto(el.getAttribute('data-foto'), f, function (src) {
+        if (el.classList.contains('has-photo') && el.style.getPropertyValue('--foto').indexOf(src) >= 0) return;   // sudah tampil: jangan animasi ulang
         el.style.setProperty('--foto', 'url("' + src.replace(/"/g, '%22') + '")');
+        el.classList.remove('foto-tenang');
         el.classList.add('has-photo');
+        setTimeout(function () { el.classList.add('foto-tenang'); }, 1300);
       });
     });
     $$('[data-foto-img]').forEach(function (el) {
@@ -660,7 +664,7 @@
     function tampil(el) {
       el.classList.add('is-in');
       if (el.parentNode && el.parentNode.setAttribute) el.parentNode.setAttribute('data-rv-seen', '1');
-      selesai(el, 900 + (parseInt(el.style.getPropertyValue('--rv-d'), 10) || 0));
+      selesai(el, 750 + (parseInt(el.style.getPropertyValue('--rv-d'), 10) || 0));
     }
     var io = new IntersectionObserver(function (daftar) {
       daftar.forEach(function (e) { if (e.isIntersecting) { io.unobserve(e.target); tampil(e.target); } });
@@ -674,12 +678,13 @@
         if (p && p.getAttribute && p.getAttribute('data-rv-seen')) { el.classList.add('rv-now', 'is-in'); selesai(el, 50); return; }
         var n = 0; for (var i = 0; i < urut.length; i++) if (urut[i][0] === p) { n = ++urut[i][1]; break; }
         if (!n) urut.push([p, 0]);
-        el.style.setProperty('--rv-d', Math.min(n, 5) * 90 + 'ms');
+        el.style.setProperty('--rv-d', Math.min(n, 4) * 70 + 'ms');
         io.observe(el);
       });
     }
     pindai();
-    new MutationObserver(pindai).observe(document.body, { childList: true, subtree: true });
+    var antre = 0;   // gabungkan banyak perubahan DOM jadi satu pindaian per frame
+    new MutationObserver(function () { if (!antre) antre = requestAnimationFrame(function () { antre = 0; pindai(); }); }).observe(document.body, { childList: true, subtree: true });
   })();
 
   // ── Mulai: tampilkan isi tersimpan/bawaan, lalu segarkan dari server ──
