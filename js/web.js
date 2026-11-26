@@ -243,7 +243,8 @@
       var sec = $('[data-section="perjalanan"]'); if (sec) sec.hidden = !list.length;
       if (!list.length) return '';
       return '<ol class="jrn">' + list.map(function (x) {
-        return '<li class="jrn-item"><figure class="jrn-fig"><span class="porto-ph" data-porto-img="' + esc(x.id) + '"></span></figure>' +
+        // Foto bisa diketuk: keterangan & penjelasan tampil di kotak detail (utama di HP)
+        return '<li class="jrn-item"><figure class="jrn-fig"><button type="button" class="jrn-btn" data-porto-open="' + esc(x.id) + '" aria-label="Lihat keterangan: ' + esc(x.judul) + '"><span class="porto-ph" data-porto-img="' + esc(x.id) + '"></span></button><span class="jrn-hint">Ketuk untuk keterangan</span></figure>' +
           '<div class="jrn-tx">' + (x.tanggal ? '<time>' + tglPanjang(x.tanggal) + '</time>' : '') + '<h3>' + esc(x.judul) + '</h3>' +
           (x.deskripsi ? '<div class="prose">' + paragraf(x.deskripsi) + '</div>' : '') + '</div></li>';
       }).join('') + '</ol>';
