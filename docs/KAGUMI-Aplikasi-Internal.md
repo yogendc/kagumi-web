@@ -1,6 +1,6 @@
 # KAGUMI Aplikasi Internal — Dokumentasi Teknis
 
-> Versi aplikasi: **4.6.9** (API_VERSI backend `4.6`) · Diperbarui: 26 November 2026
+> Versi aplikasi: **4.6.10** (API_VERSI backend `4.6`) · Diperbarui: 26 November 2026
 > Pemilik: PT. Karya Guna Usaha Mandiri (brand **KAGUMI Cargo & Auto Logistics**)
 > Panduan pemakaian untuk karyawan: `Panduan-Aplikasi-Internal-KAGUMI.pdf` (satu folder dengan file ini).
 
@@ -320,6 +320,8 @@ Tips PowerShell: bila huruf pertama perintah hilang saat ditempel (`it add`, `d 
 
 | Versi | Tanggal | Perubahan |
 |---|---|---|
+| Website 4.6.10 | 26 Nov 2026 | **Tentang Kami: kotak operasional di bawah Profil perusahaan** (`website-4.6.10.zip`). Empat kotak berisi ikon, judul, dan keterangan singkat, dengan label dan judul bagian di atasnya. Semuanya bisa diubah di Kelola Website → Tentang Kami. Kosongkan semua baris untuk menyembunyikan bagian ini. Di layar lebar tampil dua kolom, di HP satu kolom. |
+| 4.6.10 (Kelola Website) | 26 Nov 2026 | **Kelola Website → Tentang Kami: kartu Kotak operasional** (`Kode.gs`, aplikasi Internal, dan Stylesheet). Pilihan ikon dibatasi pada daftar yang tersedia. Server berubah, jadi `Kode.gs` perlu ditempel ulang ke Apps Script lalu diterapkan ulang. |
 | Website 4.6.9 | 26 Nov 2026 | **Judul halaman Tentang Kami bisa diubah**: label kecil dan judul besar. Kosongkan judul untuk memakai nama merek (Pengaturan → Branding → Nama aplikasi). Kolom baru `tentangLabel` dan `tentangJudul` di isi website; tidak ada perubahan sheet. |
 | 4.6.9 (Kelola Website) | 26 Nov 2026 | **Kelola Website → tab Tentang Kami: kartu Judul halaman Tentang Kami** (`Kode.gs` dan aplikasi Internal). Server berubah, jadi `Kode.gs` perlu ditempel ulang ke Apps Script lalu diterapkan ulang. |
 | Website 4.6.8 | 26 Nov 2026 | **Tentang Kami: perjalanan founder** (`website-4.6.8.zip`, hanya frontend website). Bagian baru di Tentang Kami, di bawah Sejarah, menampilkan foto dari Galeri dengan kategori **Perjalanan Founder**, diurutkan dari tanggal terlama; foto tanpa tanggal di akhir. Tiap foto menampilkan tanggal (bila diisi), keterangan foto, dan penjelasan. Bagian ini ditaruh di bawah hero, di atas Sejarah, dalam grid tiga kolom di layar lebar, dua kolom di tablet, dan satu kolom di HP. Keterangan di bawah tiap foto di layar lebar. Di HP, teks disembunyikan dan keterangan muncul dalam kotak detail saat foto diketuk. Tersembunyi selama belum ada foto. Foto founder tidak tampil di halaman Galeri dan Beranda. Uji: browser 1280 px dan 390 px, urutan tanggal, Galeri dan Beranda bebas kategori founder. |

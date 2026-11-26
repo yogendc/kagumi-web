@@ -488,3 +488,12 @@ a:hover > .link-arrow svg, .link-arrow:hover svg, .news:hover .link-arrow svg { 
 @keyframes kgmDialog { from { opacity: 0; transform: translateY(14px) scale(.98); } to { opacity: 1; transform: none; } }
 
 /* 4.6.7: transisi antarhalaman (view transition) dihapus — bertumpuk dengan animasi masuk sehingga terasa tersendat */
+/* Kotak operasional di bawah Profil perusahaan (Tentang Kami) */
+.ops-head { margin-bottom: 32px; max-width: 720px; }
+.ops-head h2 { margin-top: 6px; }
+.ops { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 34px 48px; }
+.ops-item { min-width: 0; }
+.ops-ico { display: inline-grid; place-items: center; font-size: 28px; color: var(--primary); }
+.ops-item h3 { font-family: var(--display); font-size: 18px; line-height: 1.3; margin: 12px 0 4px; }
+.ops-item p { color: var(--muted); font-size: 15px; line-height: 1.55; }
+@media (max-width: 560px) { .ops { grid-template-columns: minmax(0, 1fr); gap: 28px; } }

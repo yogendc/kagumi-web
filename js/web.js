@@ -10,6 +10,30 @@
  "heroTeks": "Kami melayani jasa pengiriman barang, sewa truk beserta pengemudi, serta pengiriman mobil dan alat berat antarkota. Setiap kiriman memiliki surat jalan atau resi bernomor yang bisa Anda lacak sendiri.",
  "profilSingkat": "KAGUMI Cargo & Auto Logistics adalah perusahaan jasa transportasi dan logistik yang melayani pelanggan perorangan maupun perusahaan. Kami mengutamakan ketepatan waktu, keamanan muatan, dan administrasi yang tertib, mulai dari pemesanan sampai tagihan.",
  "visi": "Menjadi perusahaan transportasi dan logistik yang dipercaya pelanggan karena tepat waktu, aman, dan transparan.",
+ "operasionalLabel": "System-driven operations",
+ "operasionalJudul": "Setiap proses tercatat. Setiap pengiriman terpantau.",
+ "operasional": [
+  {
+   "ikon": "i-doc",
+   "judul": "Surat Jalan Bernomor",
+   "teks": "Identitas dan pencatatan pengiriman."
+  },
+  {
+   "ikon": "i-check",
+   "judul": "Inspeksi Kendaraan",
+   "teks": "Pemeriksaan sebelum keberangkatan."
+  },
+  {
+   "ikon": "i-box",
+   "judul": "Tanda Terima",
+   "teks": "Dokumentasi serah terima barang."
+  },
+  {
+   "ikon": "i-doc",
+   "judul": "Invoice Tercatat",
+   "teks": "Dokumentasi transaksi dan penagihan."
+  }
+ ],
  "tentangLabel": "Tentang kami",
  "tentangJudul": "",
  "misi": [
@@ -182,6 +206,17 @@
     // Halaman Tentang Kami: label kecil dan judul besar bisa diubah di Kelola Website
     tentangLabel: function (w) { return esc(w.tentangLabel || 'Tentang kami'); },
     tentangJudul: function (w) { return esc(w.tentangJudul || nama()); },
+    // Kotak operasional di bawah Profil perusahaan (bisa diedit di Kelola Website)
+    operasionalLabel: function (w) { return esc(w.operasionalLabel || ''); },
+    operasionalJudul: function (w) { return esc(w.operasionalJudul || ''); },
+    operasional: function (w) {
+      var list = (w.operasional || []).filter(function (x) { return x && x.judul; });
+      var sec = $('[data-section="operasional"]'); if (sec) sec.hidden = !list.length;
+      return list.map(function (x) {
+        return '<li class="ops-item"><span class="ops-ico"><svg><use href="#' + esc(x.ikon || 'i-check') + '"/></svg></span><h3>' + esc(x.judul) + '</h3>' +
+          (x.teks ? '<p>' + esc(x.teks) + '</p>' : '') + '</li>';
+      }).join('');
+    },
     heroTeks: function (w) { return esc(w.heroTeks); },
     // Visi: baris baru mengikuti Enter dari pengaturan; bila tidak ada, tiap kalimat tampil di baris baru
     visi: function (w) {
