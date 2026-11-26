@@ -36,6 +36,8 @@
  ],
  "tentangLabel": "Tentang kami",
  "tentangJudul": "",
+ "cekResiJudul": "Sudah punya nomor resi?",
+ "cekResiTeks": "Cek status kiriman Anda dengan nomor resi atau surat jalan dan kode lacak dari WhatsApp.",
  "misi": [
   "Menyediakan armada yang terawat dan pengemudi yang berpengalaman.",
   "Memberikan informasi status kiriman yang jelas dan mudah diakses pelanggan.",
@@ -227,6 +229,8 @@
       return baris.map(function (x) { return esc(x.trim()); }).filter(String).join('<br>');
     },
     profilSingkat: function (w) { return paragraf(w.profilSingkat); },
+    cekResiJudul: function (w) { return esc(w.cekResiJudul || 'Sudah punya nomor resi?'); },
+    cekResiTeks: function (w) { return esc(w.cekResiTeks || 'Cek status kiriman Anda dengan nomor resi atau surat jalan dan kode lacak dari WhatsApp.'); },
     sejarah: function (w) { return paragraf(w.sejarah); },
     profil: function (w) { return paragraf(w.profil); },
     misi: function (w) { return w.misi.map(function (m) { return '<li>' + esc(m) + '</li>'; }).join(''); },

@@ -1,6 +1,6 @@
 # KAGUMI Aplikasi Internal — Dokumentasi Teknis
 
-> Versi aplikasi: **4.6.12** (API_VERSI backend `4.6`) · Diperbarui: 26 November 2026
+> Versi aplikasi: **4.6.13** (API_VERSI backend `4.6`) · Diperbarui: 26 November 2026
 > Pemilik: PT. Karya Guna Usaha Mandiri (brand **KAGUMI Cargo & Auto Logistics**)
 > Panduan pemakaian untuk karyawan: `Panduan-Aplikasi-Internal-KAGUMI.pdf` (satu folder dengan file ini).
 
@@ -320,6 +320,8 @@ Tips PowerShell: bila huruf pertama perintah hilang saat ditempel (`it add`, `d 
 
 | Versi | Tanggal | Perubahan |
 |---|---|---|
+| 4.6.13 (Kelola Website & Kode.gs) | 26 Nov 2026 | **Kotak "Sudah punya nomor resi?" bisa diedit** di tab Produk & layanan (`Kode.gs`, aplikasi Internal, dan website 4.6.13). |
+| Website 4.6.13 | 26 Nov 2026 | Kotak "Sudah punya nomor resi?" di halaman Produk & Layanan memakai teks dari Kelola Website (`website-4.6.13.zip`). |
 | Website 4.6.12 | 26 Nov 2026 | **Bidang usaha di beranda dan Tentang Kami**: baris berakhir titik (.) tampil sebagai deskripsi menjorok tanpa centang; yang lain tetap dicentang sebagai judul layanan (`website-4.6.12.zip`). |
 | 4.6.12 (Internal) | 26 Nov 2026 | **Bisa dipasang sebagai aplikasi di HP Android** (PWA): manifest, ikon, dan service worker (`aplikasi-internal-4.6.12.zip`). Service worker hanya menyimpan berkas tampilan, tidak pernah data dari Apps Script. Backend `Kode.gs` tidak berubah dari 4.6.11. |
 | Website 4.6.11 | 26 Nov 2026 | **Format nomor resi baru** `KGM-P-2611012-0001` (tahun-bulan, penerbit, cabang, urut). Cek resi cukup **6 digit terakhir** + kode lacak. Placeholder dan petunjuk di halaman Lacak, Keluhan, dan beranda (`website-4.6.11.zip`). |
