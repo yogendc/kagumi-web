@@ -353,13 +353,17 @@ a:hover > .link-arrow svg, .link-arrow:hover svg, .news:hover .link-arrow svg { 
 @media (max-width: 960px) { .porto-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 @media (max-width: 560px) { .porto-grid { grid-template-columns: minmax(0, 1fr); gap: 16px; } .porto-dlg-tx { padding: 18px; } }
 /* Perjalanan founder (Tentang Kami): foto di atas, lalu tanggal, keterangan foto, dan penjelasan */
-.jrn { list-style: none; margin: 0; padding: 0; display: grid; gap: 44px; }
-.jrn-item { margin: 0; }
+.jrn-head { margin-bottom: 36px; max-width: 640px; }
+.jrn-head h2 { margin-bottom: 8px; }
+.jrn { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 40px 28px; }
+.jrn-item { margin: 0; min-width: 0; }
+@media (max-width: 960px) { .jrn { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 560px) { .jrn { grid-template-columns: minmax(0, 1fr); gap: 36px; } }
 .jrn-fig { position: relative; margin: 0; aspect-ratio: 4 / 3; border-radius: var(--radius); overflow: hidden; background: var(--primary-soft); box-shadow: var(--shadow); }
 .jrn-fig .porto-ph { position: absolute; inset: 0; aspect-ratio: auto; }
 .jrn-tx { padding-top: 18px; }
 .jrn-tx time { display: block; color: var(--primary); font-weight: 700; font-size: 12px; letter-spacing: .04em; text-transform: uppercase; }
-.jrn-tx h3 { font-family: var(--display); font-size: 21px; line-height: 1.3; margin: 6px 0 0; }
+.jrn-tx h3 { font-family: var(--display); font-size: 19px; line-height: 1.3; margin: 6px 0 0; }
 .jrn-tx .prose { margin-top: 8px; }
 .jrn-tx .prose p { margin-top: 8px; }
 @media (min-width: 961px) and (max-width: 1280px) { .nav a { padding: 8px 8px; font-size: 14px; } .nav .nav-cta { padding: 9px 13px; margin-left: 4px; } .brand-name { max-width: 230px; } }
