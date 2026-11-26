@@ -10,6 +10,8 @@
  "heroTeks": "Kami melayani jasa pengiriman barang, sewa truk beserta pengemudi, serta pengiriman mobil dan alat berat antarkota. Setiap kiriman memiliki surat jalan atau resi bernomor yang bisa Anda lacak sendiri.",
  "profilSingkat": "KAGUMI Cargo & Auto Logistics adalah perusahaan jasa transportasi dan logistik yang melayani pelanggan perorangan maupun perusahaan. Kami mengutamakan ketepatan waktu, keamanan muatan, dan administrasi yang tertib, mulai dari pemesanan sampai tagihan.",
  "visi": "Menjadi perusahaan transportasi dan logistik yang dipercaya pelanggan karena tepat waktu, aman, dan transparan.",
+ "tentangLabel": "Tentang kami",
+ "tentangJudul": "",
  "misi": [
   "Menyediakan armada yang terawat dan pengemudi yang berpengalaman.",
   "Memberikan informasi status kiriman yang jelas dan mudah diakses pelanggan.",
@@ -177,6 +179,9 @@
   // Penyaji isi per penanda data-w
   var R = {
     heroJudul: function (w) { return esc(w.heroJudul); },
+    // Halaman Tentang Kami: label kecil dan judul besar bisa diubah di Kelola Website
+    tentangLabel: function (w) { return esc(w.tentangLabel || 'Tentang kami'); },
+    tentangJudul: function (w) { return esc(w.tentangJudul || nama()); },
     heroTeks: function (w) { return esc(w.heroTeks); },
     // Visi: baris baru mengikuti Enter dari pengaturan; bila tidak ada, tiap kalimat tampil di baris baru
     visi: function (w) {
@@ -231,8 +236,20 @@
       var f = [['Bidang usaha', w.bidangUsaha.join(', ')], ['Kantor', P.companyAddress], ['Jam kerja', (w.kontak || {}).jamKerja]];
       return f.filter(function (x) { return x[1]; }).map(function (x) { return '<div><dt>' + x[0] + '</dt><dd>' + esc(x[1]) + '</dd></div>'; }).join('');
     },
+    // Perjalanan founder tampil di Tentang Kami, bukan di Galeri pekerjaan
+    perjalanan: function () {
+      var list = (P.portofolio || []).filter(function (x) { return x.kategori === KAT_FOUNDER; })
+        .sort(function (a, b) { return String(a.tanggal || '9999').localeCompare(String(b.tanggal || '9999')); });
+      var sec = $('[data-section="perjalanan"]'); if (sec) sec.hidden = !list.length;
+      if (!list.length) return '';
+      return '<ol class="jrn">' + list.map(function (x) {
+        return '<li class="jrn-item"><figure class="jrn-fig"><span class="porto-ph" data-porto-img="' + esc(x.id) + '"></span></figure>' +
+          '<div class="jrn-tx">' + (x.tanggal ? '<time>' + tglPanjang(x.tanggal) + '</time>' : '') + '<h3>' + esc(x.judul) + '</h3>' +
+          (x.deskripsi ? '<div class="prose">' + paragraf(x.deskripsi) + '</div>' : '') + '</div></li>';
+      }).join('') + '</ol>';
+    },
     portoFilter: function () {
-      var list = P.portofolio || [], kat = [];
+      var list = portoUmum(), kat = [];
       list.forEach(function (x) { if (x.kategori && kat.indexOf(x.kategori) < 0) kat.push(x.kategori); });
       if (kat.length < 2) return '';
       return [''].concat(kat).map(function (k) {
@@ -241,12 +258,12 @@
       }).join('');
     },
     portoGrid: function () {
-      var list = (P.portofolio || []).filter(function (x) { return !portoKat || x.kategori === portoKat; });
-      if (!(P.portofolio || []).length) return '<div class="porto-empty"><svg><use href="#i-truck"/></svg><h3>Galeri segera hadir</h3><p class="muted">Dokumentasi pekerjaan kami sedang disiapkan. Sementara itu, lihat <a href="layanan.html">layanan kami</a> atau <a href="kontak.html">hubungi tim kami</a>.</p></div>';
+      var list = portoUmum().filter(function (x) { return !portoKat || x.kategori === portoKat; });
+      if (!portoUmum().length) return '<div class="porto-empty"><svg><use href="#i-truck"/></svg><h3>Galeri segera hadir</h3><p class="muted">Dokumentasi pekerjaan kami sedang disiapkan. Sementara itu, lihat <a href="layanan.html">layanan kami</a> atau <a href="kontak.html">hubungi tim kami</a>.</p></div>';
       return list.map(kartuPorto).join('');
     },
     portoBeranda: function () {
-      var list = (P.portofolio || []).slice(0, 6);
+      var list = portoUmum().slice(0, 6);
       var sec = $('[data-section="porto"]'); if (sec) sec.hidden = !list.length;
       return list.map(kartuPorto).join('');
     },
@@ -261,6 +278,8 @@
     }
   };
   var newsAll = false, portoKat = '';
+  var KAT_FOUNDER = 'Perjalanan Founder';   // harus sama dengan kategori di aplikasi Internal
+  function portoUmum() { return (P.portofolio || []).filter(function (x) { return x.kategori !== KAT_FOUNDER; }); }
   function kartuPorto(x) {
     var meta = [x.lokasi, tglPanjang(x.tanggal)].filter(String).join(' · ');
     var tag = PAGE === 'galeri' ? 'button type="button" data-porto-open="' + esc(x.id) + '"' : 'a href="galeri.html#p-' + esc(x.id) + '"';

@@ -13,7 +13,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/style.css?v=4.6.7">
+  <link rel="stylesheet" href="css/style.css?v=4.6.9">
   <script>(function(){try{if(matchMedia('(prefers-reduced-motion: reduce)').matches)return;var d=document.documentElement;d.classList.add('anim');setTimeout(function(){if(!window.__kgmAnim)d.classList.add('anim-off')},3000)}catch(e){}})()</script>
 </head>
 <body data-page="tentang">
@@ -62,8 +62,8 @@
 <main id="isi">
 <section class="page-hero" data-foto="tentang">
   <div class="wrap">
-    <p class="eyebrow">Tentang kami</p>
-    <h1 data-p="companyName">KAGUMI Cargo &amp; Auto Logistics</h1>
+    <p class="eyebrow" data-w="tentangLabel">Tentang kami</p>
+    <h1 data-w="tentangJudul">KAGUMI Cargo &amp; Auto Logistics</h1>
     <p class="lead" data-w="visi"></p>
     <nav class="subnav" aria-label="Bagian halaman"><a href="#sejarah">Sejarah</a><a href="#profil">Profil perusahaan</a><a href="#legalitas">Legalitas</a></nav>
   </div>
@@ -76,7 +76,14 @@
   </div>
 </section>
 
-<section class="sec sec-alt" id="profil">
+<section class="sec sec-alt" id="perjalanan" data-section="perjalanan" hidden>
+  <div class="wrap split-narrow">
+    <div><span class="sec-ico"><svg><use href="#i-flag"/></svg></span><h2>Perjalanan founder</h2><p class="muted">Jejak langkah para pendiri KAGUMI, dari awal merintis hingga hari ini.</p></div>
+    <div data-w="perjalanan"></div>
+  </div>
+</section>
+
+<section class="sec" id="profil">
   <div class="wrap split-narrow">
     <div><span class="sec-ico"><svg><use href="#i-building"/></svg></span><h2>Profil perusahaan</h2></div>
     <div>
@@ -86,7 +93,7 @@
   </div>
 </section>
 
-<section class="sec" id="legalitas">
+<section class="sec sec-alt" id="legalitas">
   <div class="wrap split-narrow">
     <div><span class="sec-ico"><svg><use href="#i-shield"/></svg></span><h2>Legalitas perusahaan</h2><p class="muted">Perusahaan kami terdaftar dan beroperasi sesuai ketentuan yang berlaku.</p></div>
     <div data-w="legalitas"></div>
@@ -118,7 +125,7 @@
 </footer>
 <a class="wa-float" data-wa data-wa-text="umum" hidden aria-label="Chat WhatsApp"><svg><use href="#i-wa"/></svg></a>
 
-<script src="js/config.js?v=4.6.7"></script>
-<script src="js/web.js?v=4.6.7"></script>
+<script src="js/config.js?v=4.6.9"></script>
+<script src="js/web.js?v=4.6.9"></script>
 </body>
 </html>
