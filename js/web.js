@@ -197,6 +197,8 @@
     var m = String(s || '').match(/^(\d{4})-(\d{2})-(\d{2})/);
     return m ? (+m[3]) + ' ' + BULAN_P[+m[2] - 1] + ' ' + m[1] : esc(s);
   }
+  function isDeskripsiBidang(b) { return /[.!]\s*$/.test(String(b || '').trim()); }
+  function judulBidang(w) { return (w.bidangUsaha || []).filter(function (b) { return !isDeskripsiBidang(b); }); }
   var BULAN_P = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
   function mapsQuery() { return String((W().kontak || {}).maps || P.companyAddress || '').trim(); }
 
@@ -228,9 +230,12 @@
     sejarah: function (w) { return paragraf(w.sejarah); },
     profil: function (w) { return paragraf(w.profil); },
     misi: function (w) { return w.misi.map(function (m) { return '<li>' + esc(m) + '</li>'; }).join(''); },
-    bidangUsaha: function (w) { return w.bidangUsaha.map(function (b) { return '<li><svg><use href="#i-check"/></svg><span>' + esc(b) + '</span></li>'; }).join(''); },
-    bidangUsahaDot: function (w) { return esc(w.bidangUsaha.join(' · ')); },
-    bidangUsahaInline: function (w) { return esc(w.bidangUsaha.join(', ')) + '.'; },
+    // Baris berakhir titik (.) = deskripsi: tampil menjorok tanpa centang. Baris lain = judul layanan (dicentang).
+    bidangUsaha: function (w) { return w.bidangUsaha.map(function (b) {
+      return isDeskripsiBidang(b) ? '<li class="sub"><span>' + esc(b) + '</span></li>' : '<li><svg><use href="#i-check"/></svg><span>' + esc(b) + '</span></li>';
+    }).join(''); },
+    bidangUsahaDot: function (w) { return esc(judulBidang(w).join(' · ')); },
+    bidangUsahaInline: function (w) { return esc(judulBidang(w).join(', ')) + '.'; },
     keunggulan: function (w) {
       var ic = ['i-doc', 'i-clock', 'i-truck', 'i-star', 'i-shield', 'i-target', 'i-flag', 'i-check'];
       return w.keunggulan.map(function (k, i) {
@@ -268,7 +273,7 @@
       }).join('') + '</ul>';
     },
     fakta: function (w) {
-      var f = [['Bidang usaha', w.bidangUsaha.join(', ')], ['Kantor', P.companyAddress], ['Jam kerja', (w.kontak || {}).jamKerja]];
+      var f = [['Bidang usaha', judulBidang(w).join(', ')], ['Kantor', P.companyAddress], ['Jam kerja', (w.kontak || {}).jamKerja]];
       return f.filter(function (x) { return x[1]; }).map(function (x) { return '<div><dt>' + x[0] + '</dt><dd>' + esc(x[1]) + '</dd></div>'; }).join('');
     },
     // Perjalanan founder tampil di Tentang Kami, bukan di Galeri pekerjaan

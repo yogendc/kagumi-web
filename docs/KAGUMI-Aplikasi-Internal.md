@@ -1,6 +1,6 @@
 # KAGUMI Aplikasi Internal — Dokumentasi Teknis
 
-> Versi aplikasi: **4.6.11** (API_VERSI backend `4.6`) · Diperbarui: 26 November 2026
+> Versi aplikasi: **4.6.12** (API_VERSI backend `4.6`) · Diperbarui: 26 November 2026
 > Pemilik: PT. Karya Guna Usaha Mandiri (brand **KAGUMI Cargo & Auto Logistics**)
 > Panduan pemakaian untuk karyawan: `Panduan-Aplikasi-Internal-KAGUMI.pdf` (satu folder dengan file ini).
 
@@ -320,6 +320,8 @@ Tips PowerShell: bila huruf pertama perintah hilang saat ditempel (`it add`, `d 
 
 | Versi | Tanggal | Perubahan |
 |---|---|---|
+| Website 4.6.12 | 26 Nov 2026 | **Bidang usaha di beranda dan Tentang Kami**: baris berakhir titik (.) tampil sebagai deskripsi menjorok tanpa centang; yang lain tetap dicentang sebagai judul layanan (`website-4.6.12.zip`). |
+| 4.6.12 (Internal) | 26 Nov 2026 | **Bisa dipasang sebagai aplikasi di HP Android** (PWA): manifest, ikon, dan service worker (`aplikasi-internal-4.6.12.zip`). Service worker hanya menyimpan berkas tampilan, tidak pernah data dari Apps Script. Backend `Kode.gs` tidak berubah dari 4.6.11. |
 | Website 4.6.11 | 26 Nov 2026 | **Format nomor resi baru** `KGM-P-2611012-0001` (tahun-bulan, penerbit, cabang, urut). Cek resi cukup **6 digit terakhir** + kode lacak. Placeholder dan petunjuk di halaman Lacak, Keluhan, dan beranda (`website-4.6.11.zip`). |
 | 4.6.11 (Kode.gs & Internal) | 26 Nov 2026 | **Kode cabang per akun** (kolom `KodeCabang` di sheet Pengguna, 1–9, form Pengguna untuk Admin/Super Admin). `nomorDokBaru_` memakai format baru dan tetap menghitung urut dari format lama. `cariOrderPublik_` menerima 6 digit terakhir (`cariOrderEnamDigit_`). Pakai `Kode.gs` 4.6.11. |
 | Website 4.6.10 | 26 Nov 2026 | **Tentang Kami: kotak operasional di bawah Profil perusahaan** (`website-4.6.10.zip`). Empat kotak berisi ikon, judul, dan keterangan singkat, dengan label dan judul bagian di atasnya. Semuanya bisa diubah di Kelola Website → Tentang Kami. Kosongkan semua baris untuk menyembunyikan bagian ini. Di layar lebar tampil dua kolom, di HP satu kolom. |

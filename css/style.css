@@ -150,6 +150,7 @@ a:hover > .link-arrow svg, .link-arrow:hover svg, .news:hover .link-arrow svg { 
 .biz-list { list-style: none; padding: 0; margin: 14px 0 0; display: grid; gap: 10px; }
 .biz-list li { display: flex; gap: 10px; align-items: flex-start; }
 .biz-list svg { color: var(--primary); font-size: 18px; margin-top: 3px; }
+.biz-list li.sub { display: block; margin: -6px 0 0 28px; color: var(--muted); font-size: 14.5px; line-height: 1.55; }
 
 .vm { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.3fr); gap: 20px; }
 .vm-card { background: #fff; border: 1px solid var(--line); border-radius: var(--radius); padding: 28px; }
