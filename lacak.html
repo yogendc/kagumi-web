@@ -13,7 +13,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/style.css?v=4.6.10">
+  <link rel="stylesheet" href="css/style.css?v=4.6.11">
   <script>(function(){try{if(matchMedia('(prefers-reduced-motion: reduce)').matches)return;var d=document.documentElement;d.classList.add('anim');setTimeout(function(){if(!window.__kgmAnim)d.classList.add('anim-off')},3000)}catch(e){}})()</script>
 </head>
 <body data-page="lacak">
@@ -65,9 +65,9 @@
     <div>
       <p class="eyebrow">Cek resi</p>
       <h1>Pantau status kiriman Anda</h1>
-      <p class="lead">Masukkan nomor resi atau surat jalan (diawali KGM-, tertera di bawah barcode), lalu <b>kode lacak</b> 6 karakter yang kami kirim lewat WhatsApp saat order dikonfirmasi.</p>
+      <p class="lead">Masukkan <b>6 digit terakhir</b> nomor resi atau surat jalan (tertera di bawah barcode), lalu <b>kode lacak</b> 6 karakter yang kami kirim lewat WhatsApp saat order dikonfirmasi.</p>
       <ul class="tips">
-        <li><svg><use href="#i-doc"/></svg><span>Nomor ada di bagian atas resi atau surat jalan.</span></li>
+        <li><svg><use href="#i-doc"/></svg><span>Nomor ada di bagian atas resi atau surat jalan, mis. KGM-P-2611012-0001. Cukup ketik 6 digit terakhirnya (120001).</span></li>
         <li><svg><use href="#i-shield"/></svg><span>Kode lacak tidak tercetak di surat jalan. Jangan bagikan ke orang lain, termasuk kurir. Hanya status dan waktu yang ditampilkan.</span></li>
         <li><svg><use href="#i-flag"/></svg><span>Ada masalah dengan kiriman? <a href="keluhan.html">Ajukan keluhan</a>.</span></li>
         <li><svg><use href="#i-wa"/></svg><span>Nomor tidak ditemukan? <a data-wa data-wa-text="resi">Tanyakan lewat WhatsApp</a> atau <a href="kontak.html">hubungi kami</a>.</span></li>
@@ -84,7 +84,8 @@
   <form id="trackForm" novalidate>
     <label class="fld">
       <span>No. resi / surat jalan</span>
-      <input id="tNo" name="no" autocomplete="off" autocapitalize="characters" spellcheck="false" placeholder="mis. KGM-P00012011126" maxlength="30" required>
+      <input id="tNo" name="no" autocomplete="off" autocapitalize="characters" spellcheck="false" placeholder="mis. 120001 atau KGM-P-2611012-0001" maxlength="30" required>
+      <small class="muted">Cukup 6 digit terakhir nomor resi / surat jalan.</small>
     </label>
     <label class="fld">
       <span>Kode lacak</span>
@@ -124,7 +125,7 @@
 </footer>
 <a class="wa-float" data-wa data-wa-text="umum" hidden aria-label="Chat WhatsApp"><svg><use href="#i-wa"/></svg></a>
 
-<script src="js/config.js?v=4.6.10"></script>
-<script src="js/web.js?v=4.6.10"></script>
+<script src="js/config.js?v=4.6.11"></script>
+<script src="js/web.js?v=4.6.11"></script>
 </body>
 </html>

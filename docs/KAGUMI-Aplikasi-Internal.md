@@ -1,6 +1,6 @@
 # KAGUMI Aplikasi Internal — Dokumentasi Teknis
 
-> Versi aplikasi: **4.6.10** (API_VERSI backend `4.6`) · Diperbarui: 26 November 2026
+> Versi aplikasi: **4.6.11** (API_VERSI backend `4.6`) · Diperbarui: 26 November 2026
 > Pemilik: PT. Karya Guna Usaha Mandiri (brand **KAGUMI Cargo & Auto Logistics**)
 > Panduan pemakaian untuk karyawan: `Panduan-Aplikasi-Internal-KAGUMI.pdf` (satu folder dengan file ini).
 
@@ -116,7 +116,7 @@ Sheet dibuat otomatis dari konstanta `SCHEMA`. **Kolom baru selalu ditambahkan d
 | `Pengaturan`, `Log_Aktivitas` | Setelan aplikasi, log audit |
 
 ### Penomoran
-- **Surat jalan / resi** (`nomorDokBaru_`): `KGM-` + `P|S|K` + urut 4 digit (per layanan, reset tiap tahun, counter di properti `NO_{L}`) + jumlah koli/SJ + `kodeCetak_` penerbit (2 digit) + `MM` + `YY`. Contoh `KGM-P00012011126`. Order lama tetap memakai format lama.
+- **Surat jalan / resi** (`nomorDokBaru_`): `KGM-` + `P|S|K` + `-` + `YY` + `MM` + `kodeCetak_` penerbit (2 digit) + `kodeCabang_` (1 digit, 1–9, per akun di kolom `KodeCabang` Pengguna; kosong = 1) + `-` + urut 4 digit (per layanan, reset tiap tahun, counter di properti `NO_{L}`). Contoh `KGM-P-2611012-0001`. Pencarian publik (cek resi, keluhan) cukup memakai **6 digit terakhir** nomor (`120001`) + kode lacak; hasilnya harus tepat satu order (`cariOrderEnamDigit_`). Order lama tetap memakai format lama `KGM-P00012011126` dan tetap bisa dicari dengan nomor lengkap.
 - **Kode lacak** (4.6.4, `kodeLacakBaru_`): 6 karakter acak dari `HURUF_KODE_LACAK` (`ABCDEFGHJKMNPQRSTUVWXYZ23456789`, tanpa I/L/O/0/1), dibuat saat order dikonfirmasi. Order lama diisi `isiKodeLacakLama_()` (getBootstrap SA/Admin & dailyCheck). **Tidak dicetak** di dokumen.
 - **Keluhan**: `KLH-YYMMDD-n`. Nomor diambil **setelah** validasi lolos, supaya nomor tidak terlewat.
 - **Surat**: nomor terbit saat dikonfirmasi (`SRT_COUNTER`).
@@ -320,6 +320,8 @@ Tips PowerShell: bila huruf pertama perintah hilang saat ditempel (`it add`, `d 
 
 | Versi | Tanggal | Perubahan |
 |---|---|---|
+| Website 4.6.11 | 26 Nov 2026 | **Format nomor resi baru** `KGM-P-2611012-0001` (tahun-bulan, penerbit, cabang, urut). Cek resi cukup **6 digit terakhir** + kode lacak. Placeholder dan petunjuk di halaman Lacak, Keluhan, dan beranda (`website-4.6.11.zip`). |
+| 4.6.11 (Kode.gs & Internal) | 26 Nov 2026 | **Kode cabang per akun** (kolom `KodeCabang` di sheet Pengguna, 1–9, form Pengguna untuk Admin/Super Admin). `nomorDokBaru_` memakai format baru dan tetap menghitung urut dari format lama. `cariOrderPublik_` menerima 6 digit terakhir (`cariOrderEnamDigit_`). Pakai `Kode.gs` 4.6.11. |
 | Website 4.6.10 | 26 Nov 2026 | **Tentang Kami: kotak operasional di bawah Profil perusahaan** (`website-4.6.10.zip`). Empat kotak berisi ikon, judul, dan keterangan singkat, dengan label dan judul bagian di atasnya. Semuanya bisa diubah di Kelola Website → Tentang Kami. Kosongkan semua baris untuk menyembunyikan bagian ini. Di layar lebar tampil dua kolom, di HP satu kolom. |
 | 4.6.10 (Kelola Website) | 26 Nov 2026 | **Kelola Website → Tentang Kami: kartu Kotak operasional** (`Kode.gs`, aplikasi Internal, dan Stylesheet). Pilihan ikon dibatasi pada daftar yang tersedia. Server berubah, jadi `Kode.gs` perlu ditempel ulang ke Apps Script lalu diterapkan ulang. |
 | Website 4.6.9 | 26 Nov 2026 | **Judul halaman Tentang Kami bisa diubah**: label kecil dan judul besar. Kosongkan judul untuk memakai nama merek (Pengaturan → Branding → Nama aplikasi). Kolom baru `tentangLabel` dan `tentangJudul` di isi website; tidak ada perubahan sheet. |
