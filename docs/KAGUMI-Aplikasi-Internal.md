@@ -1,6 +1,6 @@
 # KAGUMI Aplikasi Internal — Dokumentasi Teknis
 
-> Versi aplikasi: **4.6.13** (API_VERSI backend `4.6`) · Diperbarui: 26 November 2026
+> Versi aplikasi: **4.6.14** (API_VERSI backend `4.6`) · Diperbarui: 26 November 2026
 > Pemilik: PT. Karya Guna Usaha Mandiri (brand **KAGUMI Cargo & Auto Logistics**)
 > Panduan pemakaian untuk karyawan: `Panduan-Aplikasi-Internal-KAGUMI.pdf` (satu folder dengan file ini).
 
@@ -320,6 +320,8 @@ Tips PowerShell: bila huruf pertama perintah hilang saat ditempel (`it add`, `d 
 
 | Versi | Tanggal | Perubahan |
 |---|---|---|
+| 4.6.14 (Kelola Website & Kode.gs) | 26 Nov 2026 | **Hero halaman Hubungi Kami bisa diedit** (label, judul, keterangan) di tab Hubungi kami (`Kode.gs`, aplikasi Internal, dan website 4.6.14). |
+| Website 4.6.14 | 26 Nov 2026 | Hero halaman Hubungi Kami memakai teks dari Kelola Website (`website-4.6.14.zip`). |
 | 4.6.13 (Kelola Website & Kode.gs) | 26 Nov 2026 | **Kotak "Sudah punya nomor resi?" bisa diedit** di tab Produk & layanan (`Kode.gs`, aplikasi Internal, dan website 4.6.13). |
 | Website 4.6.13 | 26 Nov 2026 | Kotak "Sudah punya nomor resi?" di halaman Produk & Layanan memakai teks dari Kelola Website (`website-4.6.13.zip`). |
 | Website 4.6.12 | 26 Nov 2026 | **Bidang usaha di beranda dan Tentang Kami**: baris berakhir titik (.) tampil sebagai deskripsi menjorok tanpa centang; yang lain tetap dicentang sebagai judul layanan (`website-4.6.12.zip`). |

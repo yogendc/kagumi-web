@@ -36,6 +36,9 @@
  ],
  "tentangLabel": "Tentang kami",
  "tentangJudul": "",
+ "hubungiLabel": "Hubungi kami",
+ "hubungiJudul": "Ada pertanyaan? Kami siap membantu.",
+ "hubungiTeks": "Kirim pertanyaan lewat formulir, chat WhatsApp, atau kunjungi kantor kami.",
  "cekResiJudul": "Sudah punya nomor resi?",
  "cekResiTeks": "Cek status kiriman Anda dengan nomor resi atau surat jalan dan kode lacak dari WhatsApp.",
  "misi": [
@@ -229,6 +232,9 @@
       return baris.map(function (x) { return esc(x.trim()); }).filter(String).join('<br>');
     },
     profilSingkat: function (w) { return paragraf(w.profilSingkat); },
+    hubungiLabel: function (w) { return esc(w.hubungiLabel || 'Hubungi kami'); },
+    hubungiJudul: function (w) { return esc(w.hubungiJudul || 'Ada pertanyaan? Kami siap membantu.'); },
+    hubungiTeks: function (w) { return esc(w.hubungiTeks || 'Kirim pertanyaan lewat formulir, chat WhatsApp, atau kunjungi kantor kami.'); },
     cekResiJudul: function (w) { return esc(w.cekResiJudul || 'Sudah punya nomor resi?'); },
     cekResiTeks: function (w) { return esc(w.cekResiTeks || 'Cek status kiriman Anda dengan nomor resi atau surat jalan dan kode lacak dari WhatsApp.'); },
     sejarah: function (w) { return paragraf(w.sejarah); },
