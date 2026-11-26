@@ -41,6 +41,15 @@
  "hubungiTeks": "Kirim pertanyaan lewat formulir, chat WhatsApp, atau kunjungi kantor kami.",
  "cekResiJudul": "Sudah punya nomor resi?",
  "cekResiTeks": "Cek status kiriman Anda dengan nomor resi atau surat jalan dan kode lacak dari WhatsApp.",
+ "lacakEyebrow": "Cek resi",
+ "lacakJudul": "Pantau Status Kiriman Anda",
+ "lacakTeks": "Lacak perkembangan pengiriman barang atau kendaraan Anda melalui sistem pelacakan online KAGUMI.",
+ "lacakPoin": [
+  "Nomor resi atau surat jalan adalah identitas kiriman Anda. Cukup ketik 6 digit terakhirnya.",
+  "Kode lacak adalah kode verifikasi pribadi. Jangan bagikan kepada orang lain, termasuk kurir.",
+  "Informasi status mengikuti pembaruan terakhir dari tim kami.",
+  "Ada kendala? Hubungi tim kami lewat WhatsApp atau ajukan keluhan."
+ ],
  "misi": [
   "Menyediakan armada yang terawat dan pengemudi yang berpengalaman.",
   "Memberikan informasi status kiriman yang jelas dan mudah diakses pelanggan.",
@@ -237,6 +246,14 @@
     hubungiTeks: function (w) { return esc(w.hubungiTeks || 'Kirim pertanyaan lewat formulir, chat WhatsApp, atau kunjungi kantor kami.'); },
     cekResiJudul: function (w) { return esc(w.cekResiJudul || 'Sudah punya nomor resi?'); },
     cekResiTeks: function (w) { return esc(w.cekResiTeks || 'Cek status kiriman Anda dengan nomor resi atau surat jalan dan kode lacak dari WhatsApp.'); },
+    lacakEyebrow: function (w) { return esc(w.lacakEyebrow || 'Cek resi'); },
+    lacakJudul: function (w) { return esc(w.lacakJudul || 'Pantau Status Kiriman Anda'); },
+    lacakTeks: function (w) { return esc(w.lacakTeks || 'Lacak perkembangan pengiriman barang atau kendaraan Anda melalui sistem pelacakan online KAGUMI.'); },
+    lacakPoin: function (w) {
+      var ikon = ['i-doc', 'i-shield', 'i-flag', 'i-wa'];
+      var p = w.lacakPoin && w.lacakPoin.length ? w.lacakPoin : ['Nomor resi atau surat jalan adalah identitas kiriman Anda. Cukup ketik 6 digit terakhirnya.', 'Kode lacak adalah kode verifikasi pribadi. Jangan bagikan kepada orang lain, termasuk kurir.', 'Informasi status mengikuti pembaruan terakhir dari tim kami.', 'Ada kendala? Hubungi tim kami lewat WhatsApp atau ajukan keluhan.'];
+      return p.map(function (x, i) { return '<li><svg><use href="#' + (ikon[i] || 'i-check') + '"/></svg><span>' + esc(x) + '</span></li>'; }).join('');
+    },
     sejarah: function (w) { return paragraf(w.sejarah); },
     profil: function (w) { return paragraf(w.profil); },
     misi: function (w) { return w.misi.map(function (m) { return '<li>' + esc(m) + '</li>'; }).join(''); },
@@ -523,8 +540,11 @@
   });
 
   // ── Cek resi ──
-  var LANGKAH = ['Dijadwalkan', 'Dikirim', 'Diterima'];
-  var KET = { Dijadwalkan: 'Order diterima & dijadwalkan', Dikirim: 'Dalam perjalanan', Diterima: 'Sudah diterima', Dibatalkan: 'Dibatalkan' };
+  var LANGKAH = ['Dijadwalkan', 'Dimuat', 'Dikirim', 'Diterima'];
+  var LANGKAH_JUDUL = { Dijadwalkan: 'Pesanan dikonfirmasi', Dimuat: 'Barang telah dimuat', Dikirim: 'Dalam perjalanan', Diterima: 'Barang telah diterima' };
+  var LANGKAH_KET = { Dijadwalkan: 'Pesanan telah diterima dan tercatat.', Dimuat: 'Muatan telah dipersiapkan untuk pengiriman.', Dikirim: 'Pengiriman sedang berlangsung.', Diterima: 'Proses pengiriman telah selesai.' };
+  var KET = { Dijadwalkan: 'Pesanan dikonfirmasi', Dimuat: 'Barang telah dimuat', Dikirim: 'Dalam perjalanan', Diterima: 'Barang telah diterima', Dibatalkan: 'Dibatalkan' };
+  var BULAN_PANJANG = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
   var BULAN = ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agu', 'Sep', 'Okt', 'Nov', 'Des'];
   var HARI = ['Min', 'Sen', 'Sel', 'Rab', 'Kam', 'Jum', 'Sab'];
   function fmtWaktu(s) {
@@ -534,10 +554,17 @@
     var out = HARI[d.getUTCDay()] + ', ' + (+m[3]) + ' ' + BULAN[+m[2] - 1] + ' ' + m[1];
     return m[4] ? out + ' · ' + m[4] + '.' + m[5] + ' WIB' : out;
   }
+  function fmtWaktuPanjang(s) {
+    var m = String(s || '').match(/^(\d{4})-(\d{2})-(\d{2})(?:[ T](\d{2}):(\d{2}))?/);
+    if (!m) return esc(s);
+    var out = (+m[3]) + ' ' + BULAN_PANJANG[+m[2] - 1] + ' ' + m[1];
+    return m[4] ? out + ', ' + m[4] + '.' + m[5] + ' WIB' : out;
+  }
   function langkah(cls, st, waktu, batal) {
     var ikon = cls.indexOf('done') >= 0 ? '<svg><use href="#i-' + (batal ? 'x' : 'check') + '"/></svg>' : '';
     var w = waktu ? '<time>' + fmtWaktu(waktu) + '</time>' : (cls === 'todo' ? '<span class="wait">Menunggu</span>' : '');
-    return '<li class="step ' + cls + '"><span class="dot">' + ikon + '</span><div><b>' + esc(st) + '</b>' + w + '</div></li>';
+    var ket = LANGKAH_KET[st] ? '<small>' + esc(LANGKAH_KET[st]) + '</small>' : '';
+    return '<li class="step ' + cls + '"><span class="dot">' + ikon + '</span><div><b>' + esc(LANGKAH_JUDUL[st] || st) + '</b>' + ket + w + '</div></li>';
   }
   function renderHasil(d) {
     var riwayat = Array.isArray(d.riwayat) ? d.riwayat : [];
@@ -556,7 +583,12 @@
       });
     }
     html += '</ol>';
-    if (d.diperbarui) html += '<p class="t-upd">Terakhir diperbarui ' + fmtWaktu(d.diperbarui) + '</p>';
+    var info = [];
+    if (d.estimasi) info.push('<b>Estimasi:</b> ' + esc(d.estimasi) + ' hari');
+    if (d.lokasi) info.push('<b>Lokasi terakhir:</b> ' + esc(d.lokasi));
+    if (d.aktivitas) info.push('<b>Aktivitas terakhir:</b> ' + esc(d.aktivitas));
+    if (info.length) html += '<ul class="t-info">' + info.map(function (x) { return '<li>' + x + '</li>'; }).join('') + '</ul>';
+    if (d.diperbarui) html += '<p class="t-upd">Status terakhir diperbarui: ' + fmtWaktuPanjang(d.diperbarui) + '</p>';
     var box = $('#tResult');
     box.innerHTML = html;
     box.hidden = false;
