@@ -13,7 +13,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/style.css?v=4.6.18">
+  <link rel="stylesheet" href="css/style.css?v=4.6.19">
   <script>(function(){try{if(matchMedia('(prefers-reduced-motion: reduce)').matches)return;var d=document.documentElement;d.classList.add('anim');setTimeout(function(){if(!window.__kgmAnim)d.classList.add('anim-off')},3000)}catch(e){}})()</script>
 </head>
 <body data-page="keluhan">
@@ -69,18 +69,6 @@
   </div>
 </section>
 
-<section class="sec sec-alt">
-  <div class="wrap">
-    <div class="sec-head"><h2>Alur penanganan keluhan</h2></div>
-    <ol class="steps">
-      <li class="step"><span class="dot">1</span><div><b>Keluhan diajukan</b><span class="muted" style="display:block;font-size:14.5px">Pelanggan mengisi formulir dan melampirkan bukti jika diperlukan.</span></div></li>
-      <li class="step"><span class="dot">2</span><div><b>Nomor keluhan diterbitkan</b><span class="muted" style="display:block;font-size:14.5px">Sistem memberikan nomor keluhan unik.</span></div></li>
-      <li class="step"><span class="dot">3</span><div><b>Keluhan diverifikasi</b><span class="muted" style="display:block;font-size:14.5px">Admin memeriksa data pengiriman dan isi keluhan.</span></div></li>
-      <li class="step"><span class="dot">4</span><div><b>Dalam penanganan</b><span class="muted" style="display:block;font-size:14.5px">Keluhan diteruskan ke bagian terkait.</span></div></li>
-      <li class="step"><span class="dot">5</span><div><b>Selesai</b><span class="muted" style="display:block;font-size:14.5px">Hasil penanganan disampaikan kepada pelanggan.</span></div></li>
-    </ol>
-  </div>
-</section>
 <section class="sec">
   <div class="wrap klh-wrap">
     <div class="form-card" id="ajukan">
@@ -126,6 +114,16 @@
         <button class="btn btn-primary btn-block" id="sBtn" type="submit"><svg><use href="#i-search"/></svg><span>Cek status</span></button>
         <p class="t-msg" id="sMsg" role="alert" hidden></p>
       </form>
+      <div class="alur-klh">
+        <h3>Alur penanganan keluhan</h3>
+        <ol class="steps">
+          <li class="step"><span class="dot">1</span><div><b>Keluhan diajukan</b><span class="muted" style="display:block;font-size:14px">Pelanggan mengisi formulir dan melampirkan bukti jika diperlukan.</span></div></li>
+          <li class="step"><span class="dot">2</span><div><b>Nomor keluhan diterbitkan</b><span class="muted" style="display:block;font-size:14px">Sistem memberikan nomor keluhan unik.</span></div></li>
+          <li class="step"><span class="dot">3</span><div><b>Keluhan diverifikasi</b><span class="muted" style="display:block;font-size:14px">Admin memeriksa data pengiriman dan isi keluhan.</span></div></li>
+          <li class="step"><span class="dot">4</span><div><b>Dalam penanganan</b><span class="muted" style="display:block;font-size:14px">Keluhan diteruskan ke bagian terkait.</span></div></li>
+          <li class="step"><span class="dot">5</span><div><b>Selesai</b><span class="muted" style="display:block;font-size:14px">Hasil penanganan disampaikan kepada pelanggan.</span></div></li>
+        </ol>
+      </div>
       <div class="t-result" id="sResult" hidden aria-live="polite"></div>
     </div>
   </div>
@@ -156,7 +154,7 @@
 </footer>
 <a class="wa-float" data-wa data-wa-text="umum" hidden aria-label="Chat WhatsApp"><svg><use href="#i-wa"/></svg></a>
 
-<script src="js/config.js?v=4.6.18"></script>
-<script src="js/web.js?v=4.6.18"></script>
+<script src="js/config.js?v=4.6.19"></script>
+<script src="js/web.js?v=4.6.19"></script>
 </body>
 </html>
