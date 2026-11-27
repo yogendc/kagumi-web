@@ -13,7 +13,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/style.css?v=4.6.16">
+  <link rel="stylesheet" href="css/style.css?v=4.6.18">
   <script>(function(){try{if(matchMedia('(prefers-reduced-motion: reduce)').matches)return;var d=document.documentElement;d.classList.add('anim');setTimeout(function(){if(!window.__kgmAnim)d.classList.add('anim-off')},3000)}catch(e){}})()</script>
 </head>
 <body data-page="keluhan">
@@ -62,13 +62,25 @@
 <main id="isi">
 <section class="page-hero" data-foto="kontak">
   <div class="wrap">
-    <p class="eyebrow">Layanan keluhan</p>
-    <h1>Ada kendala dengan kiriman Anda?</h1>
-    <p class="lead">Sampaikan keluhan dengan nomor resi atau surat jalan. Anda langsung mendapat nomor keluhan untuk memantau penanganannya.</p>
+    <p class="eyebrow" data-w="keluhanLabel">Layanan keluhan</p>
+    <h1 data-w="keluhanJudul">Ada kendala dengan kiriman Anda?</h1>
+    <p class="lead" data-w="keluhanTeks">Sampaikan kendala terkait pengiriman barang atau kendaraan Anda melalui formulir keluhan KAGUMI. Setiap pengajuan akan mendapatkan nomor keluhan untuk memudahkan pemantauan proses penanganannya.</p>
     <nav class="subnav" aria-label="Bagian halaman"><a href="#ajukan">Ajukan keluhan</a><a href="#status">Cek status keluhan</a></nav>
   </div>
 </section>
 
+<section class="sec sec-alt">
+  <div class="wrap">
+    <div class="sec-head"><h2>Alur penanganan keluhan</h2></div>
+    <ol class="steps">
+      <li class="step"><span class="dot">1</span><div><b>Keluhan diajukan</b><span class="muted" style="display:block;font-size:14.5px">Pelanggan mengisi formulir dan melampirkan bukti jika diperlukan.</span></div></li>
+      <li class="step"><span class="dot">2</span><div><b>Nomor keluhan diterbitkan</b><span class="muted" style="display:block;font-size:14.5px">Sistem memberikan nomor keluhan unik.</span></div></li>
+      <li class="step"><span class="dot">3</span><div><b>Keluhan diverifikasi</b><span class="muted" style="display:block;font-size:14.5px">Admin memeriksa data pengiriman dan isi keluhan.</span></div></li>
+      <li class="step"><span class="dot">4</span><div><b>Dalam penanganan</b><span class="muted" style="display:block;font-size:14.5px">Keluhan diteruskan ke bagian terkait.</span></div></li>
+      <li class="step"><span class="dot">5</span><div><b>Selesai</b><span class="muted" style="display:block;font-size:14.5px">Hasil penanganan disampaikan kepada pelanggan.</span></div></li>
+    </ol>
+  </div>
+</section>
 <section class="sec">
   <div class="wrap klh-wrap">
     <div class="form-card" id="ajukan">
@@ -144,7 +156,7 @@
 </footer>
 <a class="wa-float" data-wa data-wa-text="umum" hidden aria-label="Chat WhatsApp"><svg><use href="#i-wa"/></svg></a>
 
-<script src="js/config.js?v=4.6.16"></script>
-<script src="js/web.js?v=4.6.16"></script>
+<script src="js/config.js?v=4.6.18"></script>
+<script src="js/web.js?v=4.6.18"></script>
 </body>
 </html>

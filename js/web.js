@@ -50,6 +50,12 @@
   "Informasi status mengikuti pembaruan terakhir dari tim kami.",
   "Ada kendala? Hubungi tim kami lewat WhatsApp atau ajukan keluhan."
  ],
+ "galeriLabel": "Galeri",
+ "galeriJudul": "Dokumentasi Proyek dan Pengiriman KAGUMI.",
+ "galeriTeks": "Dokumentasi kegiatan pengiriman barang, transportasi, serta pengiriman kendaraan dan alat berat yang ditangani KAGUMI untuk berbagai kebutuhan pelanggan.",
+ "keluhanLabel": "Layanan keluhan",
+ "keluhanJudul": "Ada kendala dengan kiriman Anda?",
+ "keluhanTeks": "Sampaikan kendala terkait pengiriman barang atau kendaraan Anda melalui formulir keluhan KAGUMI. Setiap pengajuan akan mendapatkan nomor keluhan untuk memudahkan pemantauan proses penanganannya.",
  "misi": [
   "Menyediakan armada yang terawat dan pengemudi yang berpengalaman.",
   "Memberikan informasi status kiriman yang jelas dan mudah diakses pelanggan.",
@@ -249,6 +255,12 @@
     lacakEyebrow: function (w) { return esc(w.lacakEyebrow || 'Cek resi'); },
     lacakJudul: function (w) { return esc(w.lacakJudul || 'Pantau Status Kiriman Anda'); },
     lacakTeks: function (w) { return esc(w.lacakTeks || 'Lacak perkembangan pengiriman barang atau kendaraan Anda melalui sistem pelacakan online KAGUMI.'); },
+    galeriLabel: function (w) { return esc(w.galeriLabel || 'Galeri'); },
+    galeriJudul: function (w) { return esc(w.galeriJudul || 'Dokumentasi Proyek dan Pengiriman KAGUMI.'); },
+    galeriTeks: function (w) { return esc(w.galeriTeks || 'Dokumentasi kegiatan pengiriman barang, transportasi, serta pengiriman kendaraan dan alat berat yang ditangani KAGUMI untuk berbagai kebutuhan pelanggan.'); },
+    keluhanLabel: function (w) { return esc(w.keluhanLabel || 'Layanan keluhan'); },
+    keluhanJudul: function (w) { return esc(w.keluhanJudul || 'Ada kendala dengan kiriman Anda?'); },
+    keluhanTeks: function (w) { return esc(w.keluhanTeks || 'Sampaikan kendala terkait pengiriman barang atau kendaraan Anda melalui formulir keluhan KAGUMI. Setiap pengajuan akan mendapatkan nomor keluhan untuk memudahkan pemantauan proses penanganannya.'); },
     lacakPoin: function (w) {
       var ikon = ['i-doc', 'i-shield', 'i-flag', 'i-wa'];
       var p = w.lacakPoin && w.lacakPoin.length ? w.lacakPoin : ['Nomor resi atau surat jalan adalah identitas kiriman Anda. Cukup ketik 6 digit terakhirnya.', 'Kode lacak adalah kode verifikasi pribadi. Jangan bagikan kepada orang lain, termasuk kurir.', 'Informasi status mengikuti pembaruan terakhir dari tim kami.', 'Ada kendala? Hubungi tim kami lewat WhatsApp atau ajukan keluhan.'];
